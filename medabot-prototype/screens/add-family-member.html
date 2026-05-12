@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Add family member – MedaBot</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <div class="phone-stage">
+    <div class="phone">
+
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="levels">
+          <svg viewBox="0 0 19 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="5" width="3" height="7" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 4.5 a12 12 0 0 1 16 0"/><path d="M3 7 a8 8 0 0 1 11 0"/><path d="M5.5 9.5 a4 4 0 0 1 6 0"/><circle cx="8.5" cy="11" r="1" fill="currentColor"/></svg>
+          <svg viewBox="0 0 27 13" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="12" rx="3"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="currentColor"/><rect x="23.5" y="4" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <div class="top-bar">
+        <a href="home-user-dropdown.html" class="back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 L9 12 L15 6"/></svg></a>
+      </div>
+
+      <div class="progress"><span class="is-done"></span><span></span></div>
+
+      <main class="auth">
+        <div class="tile-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 19 c0-3 3-5 6-5 s6 2 6 5 M10 19 c0-3 3-5 6-5 s6 2 6 5"/></svg>
+        </div>
+
+        <h1 style="text-align:center">Add a family member</h1>
+        <p class="lead" style="text-align:center">Manage a family member's medication from your<br>account.</p>
+
+        <form class="form" onsubmit="event.preventDefault(); window.location='add-family-member-medicine.html'">
+          <div class="form-field">
+            <label class="label">Family member's name</label>
+            <input class="input" placeholder="Their name" />
+          </div>
+
+          <div class="two-col">
+            <div class="form-field">
+              <label class="label">Date of birth</label>
+              <div class="input input-date">
+                <span style="color:var(--c-caption)">Select</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10 H21 M8 3 V7 M16 3 V7"/></svg>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="label">Family relationship</label>
+              <div class="dropdown"><div class="input"><span style="color:var(--c-caption)">Parent</span></div></div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="label">Gender</label>
+            <div class="dropdown"><div class="input"><span style="color:var(--c-caption)">Select</span></div></div>
+          </div>
+
+          <div class="form-field">
+            <label class="label">Health conditions</label>
+            <div class="input-with-action">
+              <input class="input" placeholder="Ex: Diabetes, High blood pressure..." />
+              <button type="button" class="plus" aria-label="add">+</button>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+              <span class="chip-removable">Diabetes <span class="x">×</span></span>
+            </div>
+          </div>
+        </form>
+      </main>
+
+      <button class="btn btn-disabled" disabled style="position:absolute;left:16px;right:16px;bottom:42px;">Continue</button>
+
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</body>
+</html>

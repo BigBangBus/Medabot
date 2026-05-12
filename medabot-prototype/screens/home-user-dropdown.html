@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Home – User dropdown (Add family member)</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+  <link rel="stylesheet" href="../css/medicine.css" />
+</head>
+<body>
+  <div class="phone-stage">
+    <div class="phone" style="min-height:980px">
+
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="levels">
+          <svg viewBox="0 0 19 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="5" width="3" height="7" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 4.5 a12 12 0 0 1 16 0"/><path d="M3 7 a8 8 0 0 1 11 0"/><path d="M5.5 9.5 a4 4 0 0 1 6 0"/><circle cx="8.5" cy="11" r="1" fill="currentColor"/></svg>
+          <svg viewBox="0 0 27 13" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="12" rx="3"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="currentColor"/><rect x="23.5" y="4" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <header class="home-header">
+        <div class="greet">
+          <div class="avatar"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="9" r="4"/><path d="M4 20 c0-4 4-7 8-7 s8 3 8 7 z"/></svg></div>
+          <div>
+            <span class="hi">Hi,&nbsp;</span><span class="user">User <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15 L12 9 L18 15"/></svg></span>
+          </div>
+        </div>
+        <button class="bell"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 16 v-5 a6 6 0 0 0-12 0 v5 l-2 2 v1 h16 v-1 l-2-2 Z"/><path d="M10 21 a2 2 0 0 0 4 0"/></svg></button>
+      </header>
+
+      <section class="cal-card" style="opacity:.5">
+        <div class="cal-head">Today, 29th January</div>
+        <div class="week">
+          <div class="day"><span class="letter">W</span><span class="num">26</span><span class="dot done"></span></div>
+          <div class="day"><span class="letter">T</span><span class="num">27</span><span class="dot done"></span></div>
+          <div class="day"><span class="letter">W</span><span class="num">28</span><span class="dot missed"></span></div>
+          <div class="day is-today"><span class="letter">T</span><span class="num">29</span><span class="dot"></span></div>
+          <div class="day"><span class="letter">F</span><span class="num">30</span><span class="dot"></span></div>
+          <div class="day"><span class="letter">S</span><span class="num">31</span><span class="dot"></span></div>
+          <div class="day"><span class="letter">S</span><span class="num">1</span><span class="dot"></span></div>
+        </div>
+        <div class="progress-line"></div>
+      </section>
+
+      <a href="#" class="btn btn-primary register-cta" style="opacity:.6">+ Register Medicine</a>
+
+      <article class="dose-progress" style="opacity:.7">
+        <div class="top">
+          <div class="pill-ico"><img src="../assets/Pill-aspirine-3.png" alt="" class="pill-photo"></div>
+          <div style="flex:1"><div class="name">Jardiance 25mg</div><div class="form">Pill</div></div>
+          <div class="ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#E0E0E0" stroke-width="3"/><circle cx="20" cy="20" r="16" fill="none" stroke="var(--c-primary)" stroke-width="3" stroke-dasharray="50 100" stroke-linecap="round" transform="rotate(-90 20 20)"/><circle cx="20" cy="20" r="4" fill="var(--c-primary)"/></svg></div>
+        </div>
+        <div class="meta-row"><span>Doses of the day</span><span>1/2</span></div>
+        <div class="bar"><span></span></div>
+      </article>
+
+      <article class="dose-progress complete" style="opacity:.7">
+        <div class="top">
+          <div class="pill-ico"><img src="../assets/Pill-aspirine-3.png" alt="" class="pill-photo"></div>
+          <div style="flex:1"><div class="name">Metformina 850 mg</div><div class="form">Pill</div></div>
+          <div class="ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="var(--c-primary)"/><path d="M14 20 l4 4 l8-9" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="meta-row"><span>Doses of the day</span><span>Completed</span></div>
+        <div class="bar"><span></span></div>
+      </article>
+
+      <article class="dose-progress" style="opacity:.7">
+        <div class="top">
+          <div class="pill-ico"><img src="../assets/Pill-aspirine-3.png" alt="" class="pill-photo"></div>
+          <div style="flex:1"><div class="name">Linagliptina 5mg</div><div class="form">Pill</div></div>
+          <div class="ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#E0E0E0" stroke-width="3"/><circle cx="20" cy="20" r="4" fill="var(--c-primary)"/></svg></div>
+        </div>
+        <div class="meta-row"><span>Doses of the day</span><span>1/3</span></div>
+        <div class="bar"><span></span></div>
+      </article>
+
+      <!-- Dropdown overlay -->
+      <a href="home.html" class="scrim"></a>
+      <div class="user-dropdown">
+        <div class="d-row">
+          <div class="av"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="9" r="4"/><path d="M4 20 c0-4 4-7 8-7 s8 3 8 7 z"/></svg></div>
+          <div><div class="nm">User</div><div class="role">Main Profile</div></div>
+        </div>
+        <a href="add-family-member.html" class="action" style="text-decoration:none">
+          <span class="ic">+</span> Add family member
+        </a>
+        <a href="settings.html" class="action settings-outlined" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding:10px 16px;color:var(--c-text);font-weight:700">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15 a1.65 1.65 0 0 0 0.33 1.82 l0.06 0.06 a2 2 0 0 1 0 2.83 a2 2 0 0 1 -2.83 0 l-0.06-0.06 a1.65 1.65 0 0 0 -1.82 -0.33 a1.65 1.65 0 0 0 -1 1.51 V21 a2 2 0 0 1 -2 2 a2 2 0 0 1 -2 -2 v-0.09 a1.65 1.65 0 0 0 -1 -1.51 1.65 1.65 0 0 0 -1.82 0.33 l-0.06 0.06 a2 2 0 0 1 -2.83 0 a2 2 0 0 1 0 -2.83 l0.06-0.06 a1.65 1.65 0 0 0 0.33 -1.82 a1.65 1.65 0 0 0 -1.51 -1 H3 a2 2 0 0 1 -2 -2 a2 2 0 0 1 2 -2 h0.09 a1.65 1.65 0 0 0 1.51 -1 1.65 1.65 0 0 0 -0.33 -1.82 l-0.06-0.06 a2 2 0 0 1 0 -2.83 a2 2 0 0 1 2.83 0 l0.06 0.06 a1.65 1.65 0 0 0 1.82 0.33 H9 a1.65 1.65 0 0 0 1 -1.51 V3 a2 2 0 0 1 2 -2 a2 2 0 0 1 2 2 v0.09 a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82 -0.33 l0.06-0.06 a2 2 0 0 1 2.83 0 a2 2 0 0 1 0 2.83 l-0.06 0.06 a1.65 1.65 0 0 0 -0.33 1.82 V9 a1.65 1.65 0 0 0 1.51 1 H21 a2 2 0 0 1 2 2 a2 2 0 0 1 -2 2 h-0.09 a1.65 1.65 0 0 0 -1.51 1 z"/></svg>
+          Settings
+        </a>
+        <a href="onboarding-3.html" class="action logout" style="text-decoration:none">
+          <span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21 H5 a2 2 0 0 1 -2 -2 V5 a2 2 0 0 1 2 -2 h4 M16 17 l5 -5 l-5 -5 M21 12 H9"/></svg></span>
+          Logout
+        </a>
+      </div>
+
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</body>
+</html>

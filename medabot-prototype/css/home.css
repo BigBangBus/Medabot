@@ -1,0 +1,190 @@
+/* =========================================================
+   Home screen specific
+   ========================================================= */
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 4px;
+}
+.home-header .greet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.home-header .greet img,
+.home-header .greet .avatar {
+  width: 32px; height: 32px;
+}
+.home-header .greet .hi {
+  font-size: 14px;
+  color: var(--c-caption);
+  display: inline;
+}
+.home-header .greet .user {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--c-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.home-header .greet .user .chev {
+  width: 12px; height: 12px;
+}
+
+/* Calendar card -------------------------------------------- */
+.cal-card {
+  margin: 16px;
+  background: var(--c-white);
+  border: 1px solid var(--c-stroke);
+  border-radius: var(--r-lg);
+  padding: 14px 12px 12px;
+}
+.cal-card .cal-head {
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+.cal-card .week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal-card .week .day {
+  background: transparent;
+  border-radius: 14px;
+  padding: 6px 0 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid transparent;
+}
+.cal-card .week .day .letter { font-size: 12px; font-weight: 700; color: var(--c-caption); }
+.cal-card .week .day .num    { font-size: 16px; font-weight: 700; color: var(--c-text); }
+.cal-card .week .day .dot    { width: 6px; height: 6px; border-radius: 50%; background: var(--c-stroke); }
+.cal-card .week .day .dot.done { background: #2BB47A; }
+.cal-card .week .day .dot.missed { background: #E0573A; }
+
+.cal-card .week .day.is-today {
+  background: var(--c-secondary);
+  color: var(--c-white);
+}
+.cal-card .week .day.is-today .letter,
+.cal-card .week .day.is-today .num { color: var(--c-white); }
+.cal-card .week .day.is-today .dot { background: var(--c-white); }
+
+.cal-card .progress-line {
+  margin-top: 12px;
+  height: 4px;
+  border-radius: 999px;
+  background: #F1D7C0;
+  position: relative;
+}
+.cal-card .progress-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 55%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--c-secondary), #F2C8A4);
+}
+
+/* Today's medication section ------------------------------- */
+.today-title {
+  padding: 10px 16px 8px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-h2);    /* 24 — Heading-2 */
+  font-weight: 700;            /* Bold */
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.register-cta {
+  margin: 8px 16px 14px;
+}
+
+/* Dose progress card (per medicine) ------------------------ */
+.dose-progress {
+  background: var(--c-white);
+  border: 1px solid var(--c-stroke);
+  border-radius: var(--r-lg);
+  padding: 14px;
+  margin: 0 16px 12px;
+}
+.dose-progress .top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dose-progress .top .pill-ico {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--c-pink);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.dose-progress .top .pill-ico svg { width: 22px; height: 22px; }
+.dose-progress .top .name { font-weight: 700; font-size: 17px; line-height: 1.15; }
+.dose-progress .top .form { color: var(--c-caption); font-size: 13px; }
+.dose-progress .ring {
+  width: 40px; height: 40px;
+  margin-left: auto;
+  position: relative;
+  flex-shrink: 0;
+}
+.dose-progress .meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--c-caption);
+}
+.dose-progress .bar {
+  margin-top: 6px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--c-pink);
+  overflow: hidden;
+}
+.dose-progress .bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #B197D6, var(--c-primary));
+  width: 50%;
+  border-radius: 999px;
+}
+
+.dose-progress.complete .bar > span { width: 100%; }
+.dose-progress.complete .ring { color: var(--c-primary); }
+
+/* Overall "Doses of the day" footer bar -------------------- */
+.day-progress {
+  background: var(--c-white);
+  border: 1px solid var(--c-stroke);
+  border-radius: var(--r-lg);
+  padding: 14px;
+  margin: 0 16px 16px;
+}
+.day-progress .row { display: flex; justify-content: space-between; font-size: 14px; }
+.day-progress .row .label { color: var(--c-text); font-weight: 600; }
+.day-progress .row .count { color: var(--c-caption); }
+.day-progress .bar {
+  margin-top: 8px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--c-stroke);
+  overflow: hidden;
+}
+.day-progress .bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #6BD0DC, var(--c-primary));
+  width: 33%;
+  border-radius: 999px;
+}

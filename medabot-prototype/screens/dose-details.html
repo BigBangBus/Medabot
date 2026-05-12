@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dose details – MedaBot</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+  <link rel="stylesheet" href="../css/medicine.css" />
+</head>
+<body>
+  <div class="phone-stage">
+    <div class="phone" style="min-height:980px">
+
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="levels">
+          <svg viewBox="0 0 19 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="5" width="3" height="7" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 4.5 a12 12 0 0 1 16 0"/><path d="M3 7 a8 8 0 0 1 11 0"/><path d="M5.5 9.5 a4 4 0 0 1 6 0"/><circle cx="8.5" cy="11" r="1" fill="currentColor"/></svg>
+          <svg viewBox="0 0 27 13" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="12" rx="3"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="currentColor"/><rect x="23.5" y="4" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <div class="detail-screen">
+        <div class="hd">
+          <a href="home.html" class="back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 L9 12 L15 6"/></svg></a>
+          <div><h1>Jardiance</h1><div class="meta">25mg | Pill</div></div>
+        </div>
+
+        <div class="panel-card">
+          <h3>Today</h3>
+          <div class="dose-row-line"><span class="time">08:00</span><button class="btn-mini taken">Taken</button></div>
+          <div class="dose-row-line"><span class="time">16:00</span><button class="btn-mini take">Take</button></div>
+        </div>
+
+        <div class="panel-card mini-cal">
+          <h4>Today, 29th January</h4>
+          <div class="week" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px">
+            <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">W</span><span class="num" style="font-size:15px">26</span><span class="dot done" style="width:6px;height:6px;border-radius:50%;background:#2BB47A;display:inline-block;margin-top:4px"></span></div>
+            <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">T</span><span class="num" style="font-size:15px">27</span><span class="dot done" style="width:6px;height:6px;border-radius:50%;background:#2BB47A;display:inline-block;margin-top:4px"></span></div>
+            <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">W</span><span class="num" style="font-size:15px">28</span><span class="dot missed" style="width:6px;height:6px;border-radius:50%;background:#E0573A;display:inline-block;margin-top:4px"></span></div>
+            <div class="day is-today" style="background:var(--c-secondary);border-radius:14px;padding:6px 0"><span class="letter" style="font-size:11px;color:#fff">T</span><span class="num" style="font-size:15px;color:#fff">29</span><span class="dot" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;margin-top:4px"></span></div>
+            <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">F</span><span class="num" style="font-size:15px">30</span><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--c-stroke);display:inline-block;margin-top:4px"></span></div>
+            <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">S</span><span class="num" style="font-size:15px">31</span><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--c-stroke);display:inline-block;margin-top:4px"></span></div>
+            <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">S</span><span class="num" style="font-size:15px">1</span><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--c-stroke);display:inline-block;margin-top:4px"></span></div>
+          </div>
+          <div class="progress-line" style="margin-top:12px"></div>
+        </div>
+
+        <div class="panel-card">
+          <h3>Details</h3>
+          <div class="kv-row"><span class="k">Active ingredient</span><span class="v">Empagliflozin</span></div>
+          <div class="kv-row"><span class="k">Dosage</span><span class="v">25mg</span></div>
+          <div class="kv-row"><span class="k">Dosage frequency</span><span class="v">Daily - 2x</span></div>
+          <div class="kv-row"><span class="k">Start of treatment</span><span class="v">29th January 2026</span></div>
+          <div class="kv-row"><span class="k">End of treatment</span><span class="v">N/A</span></div>
+        </div>
+
+        <a href="medicine-details.html" class="more-info" style="text-decoration:none">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5 c0-1 1-2 2-2 h6 v18 h-6 c-1 0-2-1-2-2 z M12 3 h6 c1 0 2 1 2 2 v14 c0 1-1 2-2 2 h-6 z"/></svg></div>
+          <div class="body">
+            <div class="title">More info</div>
+            <div class="sub">Leaflet, interactions, etc.</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--c-primary)"><path d="M9 6 L15 12 L9 18"/></svg>
+        </a>
+      </div>
+
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</body>
+</html>

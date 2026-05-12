@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Notifications – MedaBot</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/medicine.css" />
+</head>
+<body>
+  <div class="phone-stage">
+    <div class="phone" style="min-height:1080px">
+
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="levels">
+          <svg viewBox="0 0 19 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="5" width="3" height="7" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 4.5 a12 12 0 0 1 16 0"/><path d="M3 7 a8 8 0 0 1 11 0"/><path d="M5.5 9.5 a4 4 0 0 1 6 0"/><circle cx="8.5" cy="11" r="1" fill="currentColor"/></svg>
+          <svg viewBox="0 0 27 13" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="12" rx="3"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="currentColor"/><rect x="23.5" y="4" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <div class="notif-screen">
+        <div class="topbar">
+          <a href="home.html" class="back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 L9 12 L15 6"/></svg></a>
+          <h1>Notifications</h1>
+        </div>
+
+        <div class="notif-tabs">
+          <button class="tab is-active">All</button>
+          <button class="tab interactions">Interactions</button>
+          <button class="tab intake">Intake Reminders</button>
+          <button class="tab missed">Missed Doses</button>
+        </div>
+
+        <div class="alert-block" style="margin-top:0">
+          <div class="head">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L22 20 H2 z M12 9 V14 M12 17 v.5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+            Interactions
+          </div>
+          <div style="font-weight:800; font-size: 18px; color: var(--c-text); margin-bottom: 6px">Jardiance</div>
+          <div class="body">Use caution when combined with insulin or other medicines that lower blood sugar.</div>
+          <div class="interact">This pill nullifies the effect of birth controls such as <a href="#">Clarissa</a>.</div>
+          <div class="interact warn">This pill with <a href="#">Ben-U-Ron</a> can give you diarrhea.</div>
+        </div>
+
+        <div class="notif-card intake-block">
+          <h3 style="color:#1A6D43">Intake Reminders</h3>
+          <div class="row">
+            <div class="info">
+              <div class="nm">Jardiance 25mg</div>
+              <div class="meta">Coming up:</div>
+              <div style="font-weight: 700; font-size: 18px; margin-top: 4px">16:00</div>
+            </div>
+            <button class="take">Take</button>
+          </div>
+          <div class="sep"></div>
+          <div class="row">
+            <div class="info">
+              <div class="nm">Metformina 1000mg</div>
+              <div class="meta">Coming up:</div>
+              <div style="font-weight: 700; font-size: 18px; margin-top: 4px">16:00</div>
+            </div>
+            <button class="take">Take</button>
+          </div>
+        </div>
+
+        <div class="notif-card missed-block">
+          <h3 style="color:#C84141">Missed Doses</h3>
+          <div class="row">
+            <div class="info">
+              <div class="nm">Metformina 1000mg</div>
+              <div class="meta">Passed:</div>
+              <div style="font-weight: 700; font-size: 18px; margin-top: 4px">08:00</div>
+            </div>
+            <button class="take">Take</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</body>
+</html>

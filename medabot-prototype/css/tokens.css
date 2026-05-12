@@ -1,0 +1,399 @@
+/* =========================================================
+   Medabot – Design Tokens (extracted from Figma variables)
+   ========================================================= */
+
+/* Satoshi via Fontshare CDN ------------------------------- */
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap");
+
+:root {
+  /* Colors -------------------------------------------------- */
+  --c-primary: #118596;          /* Main-Primary  (teal) */
+  --c-primary-700: #0e6f7d;      /* hover/pressed darker variant */
+  --c-secondary: #F39D58;        /* Main-Secondary (orange) */
+  --c-secondary-soft: #FCE5D2;   /* light orange background */
+  --c-text: #1C2B30;             /* Main-Dark-Text */
+  --c-text-black: #000000;       /* Labels/Primary */
+  --c-caption: #6C6C70;          /* Main-Captions-Text */
+  --c-white: #FDFEFF;            /* White-BTN */
+  --c-bg: #F7F8F9;               /* Main-White / Light-BG */
+  --c-stroke: #E4E5E5;           /* 0.6 px stroke */
+  --c-inactive: #C8D3D4;         /* disabled buttons */
+  --c-pink: #E8DFF7;             /* Main-Pink accent */
+  --c-blue: #0088ff;             /* Accents/Blue */
+  --c-keyboard-glyph: #595959;
+  --c-keyboard-fn: #222b59a1;
+
+  /* Typography --------------------------------------------- */
+  --font-sans: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", Roboto, sans-serif;
+
+  --fs-h1: 32px;       /* Heading-1 / Black 900 */
+  --fs-h2: 24px;       /* Heading-2 / Bold 700 */
+  --fs-h3: 20px;       /* Heading-3 / Bold 700 */
+  --fs-btn: 16px;      /* BTN-Title / Bold 700 */
+  --fs-body: 16px;     /* Body / Medium 500 */
+  --fs-caption: 14px;  /* Captions / Medium 500 */
+
+  /* Radius / shadow ---------------------------------------- */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+  --shadow-drop: 0 4px 40px rgba(28, 43, 48, 0.10);
+  --shadow-icon: 0 4px 30px rgba(28, 43, 48, 0.20);
+
+  /* Layout (mobile, 393×852 reference) ---------------------- */
+  --screen-w: 393px;
+  --screen-h: 852px;
+  --safe-top: 62px;     /* status bar */
+  --safe-bottom: 34px;  /* home indicator */
+  --gutter: 16px;
+}
+
+/* =========================================================
+   Resets & base
+   ========================================================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  color: var(--c-text);
+  background: #1c1c1e;       /* dark canvas behind the phone */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Force Satoshi on every UI control so the Figma type system carries through.
+   The status-bar deliberately keeps the system font to mimic iOS. */
+*:not(.status-bar):not(.status-bar *):not(.kbd):not(.kbd *) {
+  font-family: var(--font-sans);
+}
+
+button, input, textarea, select {
+  font-family: var(--font-sans);
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+button { cursor: pointer; }
+
+a { color: inherit; text-decoration: none; }
+
+img, svg { display: block; max-width: 100%; }
+
+h1, h2, h3, p { margin: 0; }
+
+/* =========================================================
+   Typography — strictly mirrors the 6 Figma text styles
+   (Satoshi, line-height 100%, letter-spacing 0)
+   ========================================================= */
+
+/* Heading-1 : Satoshi Black 32 / 100% / 0 ----------------- */
+h1, .text-h1 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h1);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* Heading-2 : Satoshi Bold 24 / 100% / 0 ------------------ */
+h2, .text-h2 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* Heading-3 : Satoshi Bold 20 / 100% / 0 ------------------ */
+h3, .text-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* BTN-Title : Satoshi Bold 16 / 100% / 0 ------------------ */
+.text-btn {
+  font-family: var(--font-sans);
+  font-size: var(--fs-btn);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* Body : Satoshi Medium 16 / 100% / 0 --------------------- */
+.text-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* Captions : Satoshi Medium 14 / 100% / 0 ----------------- */
+.text-caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* Body defaults — base inherits Body style */
+body {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  line-height: 1.2;     /* slightly relaxed for paragraph reading */
+  letter-spacing: 0;
+}
+
+/* =========================================================
+   Phone frame – every screen file uses .phone
+   ========================================================= */
+.phone-stage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.phone {
+  position: relative;
+  width: var(--screen-w);
+  min-height: var(--screen-h);
+  background: var(--c-bg);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  isolation: isolate;
+}
+
+/* Status bar -------------------------------------------------- */
+.status-bar {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: var(--safe-top);
+  padding: 21px 24px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: var(--font-system);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--c-text);
+  pointer-events: none;
+}
+.status-bar .levels {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+.status-bar .levels svg { width: 18px; height: 12px; }
+
+/* Home indicator at the bottom */
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--c-text);
+  z-index: 6;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 24px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-sans);     /* Satoshi */
+  font-size: var(--fs-btn);          /* 16 — BTN-Title */
+  font-weight: 700;                   /* Bold */
+  line-height: 1;
+  letter-spacing: 0;
+  transition: transform 0.06s ease, background 0.15s ease;
+  width: 100%;
+}
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+  background: var(--c-primary);
+  color: var(--c-white);
+}
+.btn-primary:hover { background: var(--c-primary-700); }
+
+.btn-secondary {
+  background: var(--c-white);
+  color: var(--c-primary);
+  border: 1.5px solid var(--c-primary);
+}
+
+.btn-disabled {
+  background: var(--c-inactive);
+  color: var(--c-white);
+  cursor: not-allowed;
+}
+
+.btn-google {
+  background: var(--c-white);
+  color: var(--c-text);
+  border: 1px solid var(--c-stroke);
+}
+
+/* =========================================================
+   Inputs
+   ========================================================= */
+.input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  background: var(--c-white);
+  border: 1px solid var(--c-stroke);
+  border-radius: var(--r-md);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);   /* 16 — Body */
+  font-weight: 500;            /* Medium */
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--c-text);
+  outline: none;
+}
+.input::placeholder { color: var(--c-caption); }
+.input:focus { border-color: var(--c-primary); }
+
+.field-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-caption); /* 14 — Captions */
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--c-caption);
+  margin-bottom: 6px;
+}
+
+/* =========================================================
+   Chips / Tags
+   ========================================================= */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  background: var(--c-white);
+  color: var(--c-text);
+  border: 1px solid var(--c-stroke);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.chip.is-active {
+  background: var(--c-primary);
+  color: var(--c-white);
+  border-color: var(--c-primary);
+}
+.chip.secondary.is-active {
+  background: var(--c-secondary);
+  border-color: var(--c-secondary);
+}
+
+/* =========================================================
+   Bottom tab bar (Calendar / Medicine / Search / Chat)
+   ========================================================= */
+.tab-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 84px;
+  padding: 8px 8px 22px;
+  background: var(--c-white);
+  border-top: 1px solid var(--c-stroke);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 4;
+}
+.tab-bar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--c-caption);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 14px;
+}
+.tab-bar a.is-active { color: var(--c-primary); background: rgba(17, 133, 150, 0.08); }
+.tab-bar a svg { width: 22px; height: 22px; stroke: currentColor; }
+
+/* =========================================================
+   Header (back arrow + title)
+   ========================================================= */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 4px;
+  min-height: 48px;
+}
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-text);
+}
+.icon-btn:hover { background: rgba(0, 0, 0, 0.04); }
+.app-header h2 { flex: 1; font-size: 17px; }
+
+/* =========================================================
+   Cards
+   ========================================================= */
+.card {
+  background: var(--c-white);
+  border: 1px solid var(--c-stroke);
+  border-radius: var(--r-lg);
+  padding: 16px;
+}
+
+/* Utility helpers -------------------------------------------- */
+.stack { display: flex; flex-direction: column; }
+.stack > * + * { margin-top: var(--gap, 12px); }
+.row { display: flex; align-items: center; }
+.row.between { justify-content: space-between; }
+.text-center { text-align: center; }
+.muted { color: var(--c-caption); }
+.caption { font-size: var(--fs-caption); }
+.bold { font-weight: 700; }
+
+/* scrollable screen body ------------------------------------ */
+.screen-body {
+  position: relative;
+  padding: 0 var(--gutter) 100px;
+}

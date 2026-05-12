@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign-Up – MedaBot</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <div class="phone-stage">
+    <div class="phone">
+
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="levels">
+          <svg viewBox="0 0 19 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="5" width="3" height="7" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 4.5 a12 12 0 0 1 16 0"/><path d="M3 7 a8 8 0 0 1 11 0"/><path d="M5.5 9.5 a4 4 0 0 1 6 0"/><circle cx="8.5" cy="11" r="1" fill="currentColor"/></svg>
+          <svg viewBox="0 0 27 13" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="12" rx="3"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="currentColor"/><rect x="23.5" y="4" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <div class="top-bar">
+        <a href="onboarding-3.html" class="back-btn" aria-label="back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 L9 12 L15 6"/></svg>
+        </a>
+      </div>
+
+      <main class="auth">
+        <div class="bot-inset"><img src="../assets/Bot.png" alt="" /></div>
+
+        <h1>Sign-Up</h1>
+        <p class="lead">Sign-Up to save your medication.</p>
+
+        <form class="form" onsubmit="event.preventDefault(); window.location='sign-up-personal-details.html'">
+          <div class="form-field">
+            <label class="label">Email</label>
+            <input class="input" type="email" placeholder="example@email.com" />
+          </div>
+          <div class="form-field">
+            <label class="label">Password</label>
+            <input class="input" type="password" placeholder="Minimum 8 characters" />
+          </div>
+          <div class="form-field">
+            <label class="label">Confirm password</label>
+            <input class="input" type="password" placeholder="Repeat password" />
+          </div>
+
+          <button class="btn btn-primary" type="submit" style="margin-top:8px">Create Account</button>
+        </form>
+
+        <div class="divider">or</div>
+
+        <a href="sign-up-personal-details.html" class="btn btn-secondary">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 18.9 13 24 13c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.5 2.4-7.2 2.4-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.5 39.5 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.5l6.2 5.2C41 35.2 44 30 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+          Sign-In with Google
+        </a>
+
+        <p class="helper-link">Already have and account? <a href="sign-in.html">Sign-In</a></p>
+      </main>
+
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</body>
+</html>

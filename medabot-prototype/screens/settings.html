@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Settings – MedaBot</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/medicine.css" />
+</head>
+<body>
+  <div class="phone-stage">
+    <div class="phone" style="min-height:1400px">
+
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="levels">
+          <svg viewBox="0 0 19 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="5" width="3" height="7" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 4.5 a12 12 0 0 1 16 0"/><path d="M3 7 a8 8 0 0 1 11 0"/><path d="M5.5 9.5 a4 4 0 0 1 6 0"/><circle cx="8.5" cy="11" r="1" fill="currentColor"/></svg>
+          <svg viewBox="0 0 27 13" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="12" rx="3"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="currentColor"/><rect x="23.5" y="4" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <div class="settings-screen">
+        <div style="display:flex;align-items:center;gap:14px;padding:8px 16px 0">
+          <a href="home.html" class="back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 L9 12 L15 6"/></svg></a>
+          <h1 style="padding:0">Settings</h1>
+        </div>
+
+        <div class="set-card">
+          <h3>Profile</h3>
+          <div class="set-row">
+            <div class="l"><div class="ttl">Profile picture</div></div>
+            <div class="avatar" style="background:var(--c-pink)"><svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><circle cx="12" cy="9" r="4"/><path d="M4 20 c0-4 4-7 8-7 s8 3 8 7 z"/></svg></div>
+          </div>
+          <div class="set-row"><div class="l"><div class="ttl" style="font-weight:500">Name</div></div><span class="bold">User</span></div>
+          <div class="set-row"><div class="l"><div class="ttl" style="font-weight:500">Date of birth</div></div><span class="bold">07/07/1985</span></div>
+          <div class="set-row"><div class="l"><div class="ttl" style="font-weight:500">Gender</div></div><span class="bold">Male</span></div>
+          <div class="set-row"><div class="l"><div class="ttl" style="font-weight:500;color:var(--c-caption)">Edit profile</div></div><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 L15 12 L9 18"/></svg></div>
+        </div>
+
+        <div class="set-card">
+          <h3>Notifications</h3>
+          <div class="set-row">
+            <div class="l"><div class="ttl">Dose reminders</div><div class="sub">Notification before taking each dose</div></div>
+            <div class="toggle is-on"></div>
+          </div>
+          <div class="set-row" style="border-bottom: none">
+            <div class="l"><div class="ttl">Beforehand notification</div></div>
+          </div>
+          <div style="display:flex;gap:8px;padding:6px 0 16px;border-bottom:1px solid var(--c-stroke)">
+            <button class="filter-chip is-active">15 min.</button>
+            <button class="filter-chip">30 min.</button>
+            <button class="filter-chip">1 hour</button>
+          </div>
+          <div class="set-row">
+            <div class="l"><div class="ttl">Interaction alerts</div><div class="sub">Notification about interactions between medications</div></div>
+            <div class="toggle is-on"></div>
+          </div>
+          <div class="set-row" style="border-bottom:none">
+            <div class="l"><div class="ttl">Missed dosage alerts</div><div class="sub">Notification about skipped/missed doses.</div></div>
+            <div class="toggle"></div>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <h3>Privacy and Data</h3>
+          <div class="set-row">
+            <div class="l"><div class="ttl">Share data anonymously</div><div class="sub">Help improve the Medabot</div></div>
+            <div class="toggle is-on"></div>
+          </div>
+          <div class="set-row"><div class="l"><div class="ttl">Privacy policy</div></div><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 L15 12 L9 18"/></svg></div>
+          <div class="set-row"><div class="l"><div class="ttl">Export health data</div></div><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 L15 12 L9 18"/></svg></div>
+          <div class="set-row" style="border-bottom:none"><div class="l"><div class="ttl danger">Delete all data</div></div><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--c-secondary)"><path d="M9 6 L15 12 L9 18"/></svg></div>
+        </div>
+
+        <div class="set-card">
+          <h3>About</h3>
+          <div class="set-row"><div class="l"><div class="ttl" style="font-weight:500">Version</div></div><span class="bold">1.0.0 (beta)</span></div>
+          <div class="set-row"><div class="l"><div class="ttl" style="font-weight:500">Information source</div></div><span class="bold">Infarmed</span></div>
+          <div class="set-row" style="border-bottom:none"><div class="l"><div class="ttl" style="font-weight:500">User agreement</div></div><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 L15 12 L9 18"/></svg></div>
+        </div>
+      </div>
+
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tell us about you (keyboard) – MedaBot</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <div class="phone-stage">
+    <div class="phone">
+
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="levels">
+          <svg viewBox="0 0 19 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="5" width="3" height="7" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 4.5 a12 12 0 0 1 16 0"/><path d="M3 7 a8 8 0 0 1 11 0"/><path d="M5.5 9.5 a4 4 0 0 1 6 0"/><circle cx="8.5" cy="11" r="1" fill="currentColor"/></svg>
+          <svg viewBox="0 0 27 13" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="12" rx="3"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="currentColor"/><rect x="23.5" y="4" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <main class="auth" style="padding-top:32px">
+        <div class="tile-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="9" r="4"/>
+            <path d="M4 20 c0-4 4-7 8-7 s8 3 8 7"/>
+          </svg>
+        </div>
+        <h1 style="text-align:center">Tell us about you</h1>
+        <p class="lead" style="text-align:center">Help me give you a personalized experience.</p>
+
+        <form class="form">
+          <div class="form-field">
+            <label class="label">Name</label>
+            <input class="input" value="Nuno" />
+          </div>
+          <div class="two-col">
+            <div class="form-field">
+              <label class="label">Weight (kg)</label>
+              <input class="input focused" value="75" style="border-color:var(--c-primary); border-width:1.5px" />
+            </div>
+            <div class="form-field">
+              <label class="label">Date of birth</label>
+              <div class="input input-date">
+                <span style="color:var(--c-caption)">Select</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10 H21 M8 3 V7 M16 3 V7"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="label">Gender</label>
+            <div class="dropdown"><div class="input"><span style="color:var(--c-caption)">Select</span></div></div>
+          </div>
+        </form>
+      </main>
+
+      <!-- iOS keyboard -->
+      <div class="kbd">
+        <div class="row" style="padding:0 4px 0; gap:12px; font-size:14px; color:var(--c-text); display:flex; justify-content:space-between;">
+          <span>"The"</span><span>the</span><span>to</span>
+        </div>
+        <div class="row">
+          <div class="key">q</div><div class="key">w</div><div class="key">e</div><div class="key">r</div><div class="key">t</div><div class="key">y</div><div class="key">u</div><div class="key">i</div><div class="key">o</div><div class="key">p</div>
+        </div>
+        <div class="row" style="padding:0 18px">
+          <div class="key">a</div><div class="key">s</div><div class="key">d</div><div class="key">f</div><div class="key">g</div><div class="key">h</div><div class="key">j</div><div class="key">k</div><div class="key">l</div>
+        </div>
+        <div class="row">
+          <div class="key fn">⇧</div>
+          <div class="key">z</div><div class="key">x</div><div class="key">c</div><div class="key">v</div><div class="key">b</div><div class="key">n</div><div class="key">m</div>
+          <div class="key fn">⌫</div>
+        </div>
+        <div class="row">
+          <div class="key fn wide">ABC</div>
+          <div class="key space"></div>
+          <div class="key return" style="background:#3478F6;color:white">⏎</div>
+        </div>
+        <div class="row" style="padding:0 8px; color:var(--c-keyboard-fn); justify-content:space-between">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14 c1 1 2.5 2 4 2 s3-1 4-2"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+          <svg width="18" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="3" width="6" height="13" rx="3"/><path d="M5 12 a7 7 0 0 0 14 0 M12 19 V22"/></svg>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

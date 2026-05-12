@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rasterlink — Job Ativo</title>
+<style>
+:root {
+  --base: #111019;
+  --surface-1: #161422;
+  --surface-2: #1A1826;
+  --surface-3: #241F38;
+  --border: #2A2538;
+  --purple-mid: #534AB7;
+  --purple-bright: #7F77DD;
+  --text-primary: #F0EFFC;
+  --text-secondary: #A8A5C8;
+  --text-tertiary: #5E5A7A;
+  --teal-bright: #3ECFB2;
+  --teal-mid: #1D9E75;
+  --teal-muted: #0F3D35;
+  --success: #4ADE80;
+  --warning: #FBBF24;
+  --error: #F87171;
+  --inactive: #5E5A7A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--base);
+  color: var(--text-primary);
+  font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 52px;
+  background: var(--surface-1);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 0;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.sidebar-logo {
+  width: 30px; height: 30px;
+  background: var(--purple-mid);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff;
+  margin-bottom: 14px;
+}
+.sidebar-icon {
+  width: 34px; height: 34px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 15px;
+}
+.sidebar-icon:hover { background: var(--surface-3); color: var(--text-secondary); }
+.sidebar-icon.active { background: var(--purple-mid); color: #fff; }
+.sidebar-spacer { flex: 1; }
+
+/* App shell */
+.app-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Topbar */
+.topbar {
+  height: 44px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.breadcrumb {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.breadcrumb .crumb-active { color: var(--text-primary); }
+.topbar-spacer { flex: 1; }
+.clock {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+/* Job header */
+.job-header {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+.pulse-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--teal-bright);
+  box-shadow: 0 0 7px var(--teal-bright);
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.job-title-col { flex: 1; min-width: 0; }
+.job-client { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.job-desc { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.job-meta { display: flex; gap: 18px; }
+.meta-item { display: flex; flex-direction: column; gap: 1px; }
+.meta-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-tertiary); }
+.meta-value { font-size: 12px; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.meta-value.urgent { color: var(--warning); }
+.status-badge {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  flex-shrink: 0;
+}
+.status-badge.printing {
+  background: var(--teal-muted);
+  color: var(--teal-bright);
+  border: 1px solid rgba(62,207,178,.2);
+}
+
+/* Body grid */
+.body-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 268px 1fr 252px;
+  overflow: hidden;
+}
+.col {
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+}
+.col:last-child { border-right: none; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Section */
+.section { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.sec-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.sec-title {
+  font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.11em; color: var(--text-tertiary); font-weight: 700;
+}
+.sec-badge {
+  font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 700;
+}
+.sec-badge.warn { background: rgba(251,191,36,.12); color: var(--warning); }
+.sec-badge.ok { background: rgba(62,207,178,.1); color: var(--teal-bright); }
+.sec-badge.err { background: rgba(248,113,113,.12); color: var(--error); }
+
+/* Print heads */
+.heads-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.head-cell {
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 3px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.head-cell:hover { border-color: var(--purple-bright); }
+.head-cell.ok { border-color: rgba(74,222,128,.18); }
+.head-cell.warn { border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.04); }
+.head-label { font-size: 9px; color: var(--text-tertiary); margin-bottom: 3px; }
+.head-glyph { font-size: 13px; line-height: 1; color: var(--text-secondary); }
+.head-st { font-size: 9px; margin-top: 3px; }
+.head-st.ok { color: var(--success); }
+.head-st.warn { color: var(--warning); }
+
+/* Axes */
+.axes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.axis-block {
+  background: var(--surface-3);
+  border-radius: 4px;
+  padding: 7px 8px;
+}
+.ax-label { font-size: 9px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 3px; }
+.ax-val { font-size: 15px; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; }
+.ax-unit { font-size: 10px; color: var(--text-tertiary); margin-left: 1px; }
+.ax-state { font-size: 10px; margin-top: 3px; }
+
+/* Metrics */
+.metrics-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 5px; }
+.metric-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 9px;
+}
+.mc-label { font-size: 9px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 3px; }
+.mc-val { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+.mc-val.ok { color: var(--teal-bright); }
+.mc-val.warn { color: var(--warning); }
+.mc-unit { font-size: 10px; font-weight: 400; color: var(--text-tertiary); margin-left: 2px; }
+.mc-sub { font-size: 9px; margin-top: 3px; }
+
+/* Ink */
+.ink-list { display: flex; flex-direction: column; gap: 5px; }
+.ink-row { display: grid; grid-template-columns: 26px 1fr 34px; align-items: center; gap: 7px; }
+.ink-chip {
+  font-size: 9px; font-weight: 700;
+  text-align: center; padding: 2px 3px;
+  border-radius: 3px; letter-spacing: .04em;
+}
+.ic-C { background:#0c4060; color:#60c4f4; }
+.ic-M { background:#4d0e38; color:#f47ab9; }
+.ic-Y { background:#4d3e00; color:#fbbf24; }
+.ic-K { background:var(--surface-3); color:var(--text-secondary); border:1px solid var(--border); }
+.ic-W { background:var(--surface-3); color:var(--text-primary); border:1px solid #5e5a7a; }
+.ic-V { background:var(--teal-muted); color:var(--teal-bright); }
+.ink-track { height: 5px; background: var(--surface-3); border-radius: 3px; overflow: hidden; }
+.ink-fill { height: 100%; border-radius: 3px; }
+.if-hi { background: var(--teal-mid); }
+.if-mid { background: var(--warning); }
+.if-low { background: var(--error); }
+.ink-pct { font-size: 10px; color: var(--text-secondary); text-align: right; font-variant-numeric: tabular-nums; }
+.ink-pct.warn { color: var(--warning); }
+
+/* Center column */
+/* Progress block */
+.progress-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 13px;
+  margin-bottom: 10px;
+}
+.prog-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+.prog-counter { flex: 1; }
+.prog-big { font-size: 30px; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; }
+.prog-big span { font-size: 16px; color: var(--text-tertiary); }
+.prog-sub { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+.prog-passes { text-align: center; }
+.pass-val { font-size: 20px; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.pass-val small { font-size: 12px; color: var(--text-tertiary); }
+.pass-lbl { font-size: 9px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 3px; }
+.prog-eta { text-align: right; flex: 1; }
+.eta-val { font-size: 22px; font-weight: 700; color: var(--teal-bright); font-variant-numeric: tabular-nums; }
+.eta-lbl { font-size: 9px; color: var(--text-tertiary); margin-top: 2px; }
+.eta-time { font-size: 10px; color: var(--text-secondary); margin-top: 3px; }
+.prog-bar-track { height: 7px; background: var(--surface-3); border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
+.prog-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--teal-mid), var(--teal-bright));
+  transition: width 1s;
+}
+.prog-pct-row {
+  display: flex; justify-content: space-between;
+  font-size: 10px; color: var(--text-secondary);
+}
+
+/* Layers pills */
+.layers-row {
+  display: flex; gap: 5px;
+  margin-top: 10px;
+}
+.layer-pill {
+  flex: 1; padding: 6px 6px;
+  border-radius: 4px; border: 1px solid var(--border);
+  text-align: center;
+}
+.lp-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
+.lp-val { font-size: 10px; font-weight: 600; }
+.layer-pill.done { background: rgba(74,222,128,.04); border-color: rgba(74,222,128,.2); }
+.layer-pill.done .lp-lbl { color: var(--text-tertiary); }
+.layer-pill.done .lp-val { color: var(--success); }
+.layer-pill.active { background: var(--teal-muted); border-color: rgba(62,207,178,.3); }
+.layer-pill.active .lp-lbl { color: var(--teal-bright); }
+.layer-pill.active .lp-val { color: var(--teal-bright); }
+.layer-pill.pending { background: var(--surface-3); }
+.layer-pill.pending .lp-lbl { color: var(--text-tertiary); }
+.layer-pill.pending .lp-val { color: var(--inactive); }
+
+/* Alerts */
+.alerts-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.alerts-counts { display: flex; align-items: center; gap: 5px; }
+.alert-count-badge {
+  font-size: 9px; font-weight: 700;
+  padding: 1px 5px; border-radius: 3px;
+}
+.acb-crit { background: rgba(248,113,113,.15); color: var(--error); }
+.acb-warn { background: rgba(251,191,36,.15); color: var(--warning); }
+.see-all { font-size: 10px; color: var(--text-tertiary); cursor: pointer; }
+.see-all:hover { color: var(--text-secondary); }
+
+.alert-card {
+  border-radius: 6px;
+  padding: 10px 11px;
+  margin-bottom: 6px;
+  border: 1px solid;
+  position: relative;
+}
+.alert-card.crit { background: rgba(248,113,113,.06); border-color: rgba(248,113,113,.28); }
+.alert-card.warn { background: rgba(251,191,36,.06); border-color: rgba(251,191,36,.22); }
+.alert-card.info { background: rgba(127,119,221,.06); border-color: rgba(127,119,221,.18); }
+.alert-top { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
+.asev {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .09em; padding: 1px 5px; border-radius: 3px;
+}
+.asev.crit { background: rgba(248,113,113,.18); color: var(--error); }
+.asev.warn { background: rgba(251,191,36,.18); color: var(--warning); }
+.asev.info { background: rgba(127,119,221,.15); color: var(--purple-bright); }
+.asrc { font-size: 11px; color: var(--text-secondary); }
+.atime { font-size: 10px; color: var(--text-tertiary); margin-left: auto; font-variant-numeric: tabular-nums; }
+.amsg { font-size: 11px; color: var(--text-primary); line-height: 1.45; margin-bottom: 7px; }
+.aaction {
+  display: flex; align-items: flex-start; gap: 6px;
+  padding: 6px 8px;
+  background: rgba(255,255,255,.03);
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,.05);
+}
+.aaction-ico { font-size: 10px; margin-top: 1px; color: var(--text-tertiary); flex-shrink: 0; }
+.aaction-txt { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+.aaction-txt strong { color: var(--teal-bright); }
+.alert-dismiss {
+  position: absolute; top: 7px; right: 7px;
+  background: none; border: none;
+  color: var(--text-tertiary); cursor: pointer;
+  font-size: 13px; line-height: 1; padding: 2px 4px;
+  border-radius: 3px;
+}
+.alert-dismiss:hover { color: var(--text-secondary); background: rgba(255,255,255,.05); }
+
+/* Event log */
+.eventlog {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.eventlog-head {
+  padding: 7px 11px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.eventlog-body { max-height: 155px; overflow-y: auto; }
+.ev-row {
+  display: grid;
+  grid-template-columns: 50px 14px 1fr;
+  gap: 7px;
+  align-items: start;
+  padding: 5px 11px;
+  border-bottom: 1px solid rgba(42,37,56,.5);
+}
+.ev-row:last-child { border-bottom: none; }
+.ev-time { font-size: 9px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.ev-dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+.ev-txt { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+.ev-txt strong { color: var(--text-primary); }
+
+/* Right col */
+.right-col { background: var(--surface-1); }
+
+/* Buttons */
+.btn-group { display: flex; flex-direction: column; gap: 5px; }
+.btn {
+  padding: 9px 14px;
+  border-radius: 5px;
+  border: 1px solid;
+  font-family: inherit;
+  font-size: 11px; font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  gap: 7px;
+  transition: all .15s;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  width: 100%;
+}
+.btn-pause { background: rgba(251,191,36,.09); border-color: rgba(251,191,36,.28); color: var(--warning); }
+.btn-pause:hover { background: rgba(251,191,36,.16); }
+.btn-flag { background: rgba(127,119,221,.09); border-color: rgba(127,119,221,.22); color: var(--purple-bright); }
+.btn-flag:hover { background: rgba(127,119,221,.16); }
+.btn-done { background: rgba(62,207,178,.1); border-color: rgba(62,207,178,.28); color: var(--teal-bright); }
+.btn-done:hover { background: rgba(62,207,178,.18); }
+.btn-cancel { background: rgba(248,113,113,.07); border-color: rgba(248,113,113,.18); color: var(--error); }
+.btn-cancel:hover { background: rgba(248,113,113,.13); }
+.btn-go { background: rgba(83,74,183,.12); border-color: rgba(83,74,183,.28); color: var(--purple-bright); }
+.btn-go:hover { background: rgba(83,74,183,.2); }
+
+/* Position control */
+.pos-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 7px; }
+.pos-input-grp { display: flex; flex-direction: column; gap: 3px; }
+.pos-lbl { font-size: 9px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .06em; }
+.pos-input {
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 7px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  width: 100%;
+  transition: border-color .15s;
+}
+.pos-input:focus { outline: none; border-color: var(--purple-bright); }
+.jog-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin-bottom: 4px; }
+.jog-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 4px; }
+.jog-btn {
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 7px;
+  cursor: pointer;
+  text-align: center;
+  transition: all .15s;
+}
+.jog-btn:hover { border-color: var(--purple-bright); color: var(--text-primary); }
+.jog-btn:active { background: var(--surface-2); }
+.jog-home { font-size: 9px; font-weight: 700; color: var(--text-tertiary); }
+
+/* Layer preview */
+.layer-preview-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.lp-canvas {
+  background: #0a0910;
+  height: 90px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.lp-mock {
+  width: 78%; height: 56px;
+  border: 1px dashed var(--border);
+  border-radius: 2px;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.lp-cmyk-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(96,196,244,.14) 0%, rgba(244,122,185,.14) 33%, rgba(251,191,36,.14) 66%, rgba(168,165,200,.09) 100%);
+  border-radius: 2px;
+}
+.scan-line {
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--teal-bright), transparent);
+  animation: scan 2.8s linear infinite;
+}
+@keyframes scan { 0%{top:0%;opacity:0} 8%{opacity:1} 92%{opacity:1} 100%{top:100%;opacity:0} }
+.lp-lbl { font-size: 10px; color: var(--text-tertiary); z-index: 1; }
+.lp-rows { padding: 7px 11px; }
+.lp-row {
+  display: flex; align-items: center; gap: 7px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(42,37,56,.4);
+}
+.lp-row:last-child { border-bottom: none; }
+.lp-swatch { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+.lp-name { font-size: 11px; color: var(--text-secondary); flex: 1; }
+.lp-status { font-size: 10px; }
+
+/* Tooltip */
+[data-tip] { position: relative; }
+[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+  z-index: 200;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">RL</div>
+  <div class="sidebar-icon active" data-tip="Jobs ativos">⬡</div>
+  <div class="sidebar-icon" data-tip="Fila de impressão">☰</div>
+  <div class="sidebar-icon" data-tip="RIP / Ficheiros">⬢</div>
+  <div class="sidebar-icon" data-tip="Histórico de jobs">⟲</div>
+  <div class="sidebar-spacer"></div>
+  <div class="sidebar-icon" data-tip="Configurações">⚙</div>
+</aside>
+
+<div class="app-shell">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="breadcrumb">
+      <span>Jobs</span>
+      <span style="color:var(--border)">›</span>
+      <span class="crumb-active">JB-2847 — A imprimir</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div style="font-size:10px;color:var(--text-tertiary);margin-right:10px;">Impresora: UV-3200 · Online</div>
+    <div class="clock" id="clock">14:23:07</div>
+  </div>
+
+  <!-- Job header -->
+  <div class="job-header">
+    <div class="pulse-dot"></div>
+    <div class="job-title-col">
+      <div class="job-client">Futurlab — Painel Expositivo Dupla Face</div>
+      <div class="job-desc">PVC 5mm · 1200 × 2400 mm · 4 unid. · CMYK + Branco + Verniz · Direção: Normal</div>
+    </div>
+    <div class="job-meta">
+      <div class="meta-item">
+        <div class="meta-label">Job ID</div>
+        <div class="meta-value">JB-2847</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">PO</div>
+        <div class="meta-value">PO-48231</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Deadline</div>
+        <div class="meta-value urgent">Hoje 17:00</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Operador</div>
+        <div class="meta-value">M. Santos</div>
+      </div>
+    </div>
+    <div class="status-badge printing">● A imprimir</div>
+  </div>
+
+  <!-- Body -->
+  <div class="body-grid">
+
+    <!-- COL LEFT: Machine state -->
+    <div class="col" style="background:var(--surface-1);">
+
+      <!-- Print heads -->
+      <div class="section">
+        <div class="sec-header">
+          <span class="sec-title">Cabeças de impressão</span>
+          <span class="sec-badge warn">1 aviso</span>
+        </div>
+        <div class="heads-grid">
+          <div class="head-cell ok" data-tip="C1 — OK">
+            <div class="head-label">C1</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="C2 — OK">
+            <div class="head-label">C2</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="M1 — OK">
+            <div class="head-label">M1</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell warn" data-tip="M2 — Entupimento parcial">
+            <div class="head-label">M2</div>
+            <div class="head-glyph" style="color:var(--warning)">▼</div>
+            <div class="head-st warn">⚠ Entup.</div>
+          </div>
+          <div class="head-cell ok" data-tip="Y1 — OK">
+            <div class="head-label">Y1</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="Y2 — OK">
+            <div class="head-label">Y2</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="K1 — OK">
+            <div class="head-label">K1</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="K2 — OK">
+            <div class="head-label">K2</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="W1 — OK">
+            <div class="head-label">W1</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="W2 — OK">
+            <div class="head-label">W2</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="V1 — OK">
+            <div class="head-label">V1</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+          <div class="head-cell ok" data-tip="V2 — OK">
+            <div class="head-label">V2</div>
+            <div class="head-glyph">▼</div>
+            <div class="head-st ok">OK</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge / Axes -->
+      <div class="section">
+        <div class="sec-header">
+          <span class="sec-title">Ponte / Eixos</span>
+          <span style="font-size:10px;color:var(--teal-bright);">● Em movimento</span>
+        </div>
+        <div class="axes-grid">
+          <div class="axis-block">
+            <div class="ax-label">Eixo X</div>
+            <div class="ax-val" id="ax-x">342<span class="ax-unit">mm</span></div>
+            <div class="ax-state" style="color:var(--teal-bright);">→ Avanço</div>
+          </div>
+          <div class="axis-block">
+            <div class="ax-label">Eixo Y</div>
+            <div class="ax-val">0<span class="ax-unit">mm</span></div>
+            <div class="ax-state" style="color:var(--text-tertiary);">Fixo</div>
+          </div>
+          <div class="axis-block">
+            <div class="ax-label">Altura (Z)</div>
+            <div class="ax-val">5.0<span class="ax-unit">mm</span></div>
+            <div class="ax-state" style="color:var(--success);">✓ OK</div>
+          </div>
+          <div class="axis-block">
+            <div class="ax-label">Pass atual</div>
+            <div class="ax-val">3<span class="ax-unit">/8</span></div>
+            <div class="ax-state" style="color:var(--text-secondary);">CMYK</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estado geral -->
+      <div class="section">
+        <div class="sec-header">
+          <span class="sec-title">Estado geral</span>
+        </div>
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="mc-label">Temperatura</div>
+            <div class="mc-val ok">38<span class="mc-unit">°C</span></div>
+            <div class="mc-sub" style="color:var(--success);">✓ Normal (35–42°C)</div>
+          </div>
+          <div class="metric-card">
+            <div class="mc-label">Velocidade</div>
+            <div class="mc-val ok">720<span class="mc-unit">mm/s</span></div>
+            <div class="mc-sub" style="color:var(--text-secondary);">Modo: Qualidade</div>
+          </div>
+        </div>
+        <div class="metrics-row" style="margin-bottom:0">
+          <div class="metric-card">
+            <div class="mc-label">UV Lamp 1</div>
+            <div class="mc-val ok">100<span class="mc-unit">%</span></div>
+            <div class="mc-sub" style="color:var(--success);">✓ OK</div>
+          </div>
+          <div class="metric-card">
+            <div class="mc-label">UV Lamp 2</div>
+            <div class="mc-val warn">87<span class="mc-unit">%</span></div>
+            <div class="mc-sub" style="color:var(--warning);">⚠ Verificar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ink channels -->
+      <div class="section">
+        <div class="sec-header">
+          <span class="sec-title">Pressão de tinta</span>
+          <span class="sec-badge warn">W baixo</span>
+        </div>
+        <div class="ink-list">
+          <div class="ink-row">
+            <span class="ink-chip ic-C">C</span>
+            <div class="ink-track"><div class="ink-fill if-hi" style="width:78%"></div></div>
+            <span class="ink-pct">78%</span>
+          </div>
+          <div class="ink-row">
+            <span class="ink-chip ic-M">M</span>
+            <div class="ink-track"><div class="ink-fill if-hi" style="width:65%"></div></div>
+            <span class="ink-pct">65%</span>
+          </div>
+          <div class="ink-row">
+            <span class="ink-chip ic-Y">Y</span>
+            <div class="ink-track"><div class="ink-fill if-hi" style="width:82%"></div></div>
+            <span class="ink-pct">82%</span>
+          </div>
+          <div class="ink-row">
+            <span class="ink-chip ic-K">K</span>
+            <div class="ink-track"><div class="ink-fill if-hi" style="width:71%"></div></div>
+            <span class="ink-pct">71%</span>
+          </div>
+          <div class="ink-row">
+            <span class="ink-chip ic-W">W</span>
+            <div class="ink-track"><div class="ink-fill if-mid" style="width:34%"></div></div>
+            <span class="ink-pct warn">34%</span>
+          </div>
+          <div class="ink-row">
+            <span class="ink-chip ic-V">V</span>
+            <div class="ink-track"><div class="ink-fill if-hi" style="width:89%"></div></div>
+            <span class="ink-pct">89%</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /col left -->
+
+    <!-- COL CENTER: Progress + Alerts + Log -->
+    <div class="col" style="background:var(--base);">
+      <div style="padding:12px;">
+
+        <!-- Progress -->
+        <div class="progress-card">
+          <div class="prog-top">
+            <div class="prog-counter">
+              <div class="prog-big">2<span> / 4</span></div>
+              <div class="prog-sub">Sheets completos</div>
+            </div>
+            <div class="prog-passes">
+              <div class="pass-lbl">Pass atual</div>
+              <div class="pass-val">3 <small>/ 8 passes</small></div>
+              <div style="font-size:10px;color:var(--text-secondary);margin-top:3px;">Camada: CMYK</div>
+            </div>
+            <div class="prog-eta">
+              <div class="eta-val">43 min</div>
+              <div class="eta-lbl">Tempo estimado restante</div>
+              <div class="eta-time">Conclusão prevista: ~15:06</div>
+            </div>
+          </div>
+          <div class="prog-bar-track">
+            <div class="prog-bar-fill" id="prog-fill" style="width:37%"></div>
+          </div>
+          <div class="prog-pct-row">
+            <span>Progresso geral: <strong style="color:var(--text-primary)">37%</strong></span>
+            <span style="color:var(--text-tertiary)">Iniciado às 13:41</span>
+          </div>
+          <div class="layers-row">
+            <div class="layer-pill done">
+              <div class="lp-lbl">Branco base</div>
+              <div class="lp-val">✓ Concluído</div>
+            </div>
+            <div class="layer-pill active">
+              <div class="lp-lbl">CMYK</div>
+              <div class="lp-val">● A imprimir</div>
+            </div>
+            <div class="layer-pill pending">
+              <div class="lp-lbl">Branco 2ª</div>
+              <div class="lp-val">— Pendente</div>
+            </div>
+            <div class="layer-pill pending">
+              <div class="lp-lbl">Verniz</div>
+              <div class="lp-val">— Pendente</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alerts -->
+        <div style="margin-bottom:10px;">
+          <div class="alerts-header">
+            <div class="alerts-counts">
+              <span class="sec-title">Alertas ativos</span>
+              <span class="alert-count-badge acb-crit">1 crítico</span>
+              <span class="alert-count-badge acb-warn">2 avisos</span>
+            </div>
+            <span class="see-all">Ver histórico →</span>
+          </div>
+
+          <!-- Critical -->
+          <div class="alert-card crit" id="alert-1">
+            <button class="alert-dismiss" onclick="dismissAlert('alert-1')">×</button>
+            <div class="alert-top">
+              <span class="asev crit">● Crítico</span>
+              <span class="asrc">Cabeça M2 — Magenta</span>
+              <span class="atime">14:18:42</span>
+            </div>
+            <div class="amsg">
+              A cabeça M2 (Magenta) está com entupimento parcial. Foram detetados bicos perdidos em 3 dos últimos 4 passes — risco real de faixas visíveis no sheet atual e nos seguintes.
+            </div>
+            <div class="aaction">
+              <span class="aaction-ico">→</span>
+              <span class="aaction-txt"><strong>Pausar o job agora.</strong> Executar purga completa da cabeça M2, depois fazer test print antes de retomar. Tempo estimado de paragem: 4–6 min.</span>
+            </div>
+          </div>
+
+          <!-- Warning -->
+          <div class="alert-card warn" id="alert-2">
+            <button class="alert-dismiss" onclick="dismissAlert('alert-2')">×</button>
+            <div class="alert-top">
+              <span class="asev warn">⚠ Aviso</span>
+              <span class="asrc">Nível de tinta — Branco (W)</span>
+              <span class="atime">14:09:15</span>
+            </div>
+            <div class="amsg">
+              Canal W está a 34%. Estimativa no final do job (Branco base + Branco 2ª): 8% — abaixo do mínimo operacional de 10%.
+            </div>
+            <div class="aaction">
+              <span class="aaction-ico">→</span>
+              <span class="aaction-txt">Verificar reserva antes do próximo sheet. <strong>Repor cartuxo W antes da camada Branco 2ª</strong> para evitar interrupção no meio da passagem.</span>
+            </div>
+          </div>
+
+          <!-- Info -->
+          <div class="alert-card info" id="alert-3">
+            <button class="alert-dismiss" onclick="dismissAlert('alert-3')">×</button>
+            <div class="alert-top">
+              <span class="asev info">ℹ Info</span>
+              <span class="asrc">UV Lamp 2</span>
+              <span class="atime">13:52:00</span>
+            </div>
+            <div class="amsg">
+              UV Lamp 2 a operar a 87% da potência nominal. Não compromete o job atual, mas a tendência de degradação indica substituição em breve.
+            </div>
+            <div class="aaction">
+              <span class="aaction-ico">→</span>
+              <span class="aaction-txt">Registar na folha de manutenção preventiva. <strong>Agendar substituição no próximo intervalo de manutenção programada.</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event log -->
+        <div class="eventlog">
+          <div class="eventlog-head">
+            <span class="sec-title">Log de eventos — JB-2847</span>
+            <span style="font-size:10px;color:var(--text-tertiary);">14 eventos</span>
+          </div>
+          <div class="eventlog-body">
+            <div class="ev-row">
+              <span class="ev-time">14:18:42</span>
+              <div class="ev-dot" style="background:var(--error)"></div>
+              <span class="ev-txt"><strong>Alerta crítico:</strong> Entupimento parcial detetado na cabeça M2</span>
+            </div>
+            <div class="ev-row">
+              <span class="ev-time">14:15:03</span>
+              <div class="ev-dot" style="background:var(--teal-bright)"></div>
+              <span class="ev-txt">Sheet 2/4 — CMYK pass 2 concluído</span>
+            </div>
+            <div class="ev-row">
+              <span class="ev-time">14:09:15</span>
+              <div class="ev-dot" style="background:var(--warning)"></div>
+              <span class="ev-txt"><strong>Aviso:</strong> Tinta Branco (W) abaixo de 40% — verificar reserva</span>
+            </div>
+            <div class="ev-row">
+              <span class="ev-time">14:02:31</span>
+              <div class="ev-dot" style="background:var(--teal-bright)"></div>
+              <span class="ev-txt">Início sheet 2/4 — camada CMYK, pass 1</span>
+            </div>
+            <div class="ev-row">
+              <span class="ev-time">13:58:47</span>
+              <div class="ev-dot" style="background:var(--success)"></div>
+              <span class="ev-txt">Sheet 1/4 concluído — Branco base + CMYK OK</span>
+            </div>
+            <div class="ev-row">
+              <span class="ev-time">13:52:00</span>
+              <div class="ev-dot" style="background:var(--purple-bright)"></div>
+              <span class="ev-txt">UV Lamp 2 a 87% — tendência de degradação registada</span>
+            </div>
+            <div class="ev-row">
+              <span class="ev-time">13:45:12</span>
+              <div class="ev-dot" style="background:var(--teal-bright)"></div>
+              <span class="ev-txt">Sheet 1/4 — CMYK concluído, iniciando Branco base</span>
+            </div>
+            <div class="ev-row">
+              <span class="ev-time">13:41:02</span>
+              <div class="ev-dot" style="background:var(--teal-bright)"></div>
+              <span class="ev-txt"><strong>Job iniciado</strong> — operador M. Santos · JB-2847</span>
+            </div>
+            <div class="ev-row">
+              <span class="ev-time">13:38:55</span>
+              <div class="ev-dot" style="background:var(--text-tertiary)"></div>
+              <span class="ev-txt">RIP concluído — 4 camadas, 1200×2400mm, 720 dpi, 4 passes</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /col center -->
+
+    <!-- COL RIGHT: Controls + Position + Preview -->
+    <div class="col right-col">
+
+      <!-- Job controls -->
+      <div class="section">
+        <div class="sec-header">
+          <span class="sec-title">Controlos do job</span>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-pause" onclick="this.textContent=this.textContent.includes('Pausar')?'▶ Retomar job':'⏸ Pausar job'">⏸ Pausar job</button>
+          <button class="btn btn-flag">⚑ Escalar ao gestor</button>
+          <button class="btn btn-done">✓ Marcar concluído</button>
+          <button class="btn btn-cancel">✕ Cancelar job</button>
+        </div>
+      </div>
+
+      <!-- Head position -->
+      <div class="section">
+        <div class="sec-header">
+          <span class="sec-title">Posição das cabeças</span>
+          <span style="font-size:10px;color:var(--teal-bright);">● Live</span>
+        </div>
+        <div class="pos-inputs">
+          <div class="pos-input-grp">
+            <label class="pos-lbl">X (mm)</label>
+            <input class="pos-input" id="inp-x" type="text" value="342.0">
+          </div>
+          <div class="pos-input-grp">
+            <label class="pos-lbl">Y (mm)</label>
+            <input class="pos-input" type="text" value="0.0">
+          </div>
+        </div>
+        <div class="jog-grid-3">
+          <div></div>
+          <button class="jog-btn">↑</button>
+          <div></div>
+        </div>
+        <div class="jog-grid-3" style="margin-bottom:4px">
+          <button class="jog-btn">←</button>
+          <button class="jog-btn jog-home">HOME</button>
+          <button class="jog-btn">→</button>
+        </div>
+        <div class="jog-grid-3" style="margin-bottom:6px">
+          <div></div>
+          <button class="jog-btn">↓</button>
+          <div></div>
+        </div>
+        <div class="jog-grid-2">
+          <button class="jog-btn" style="font-size:10px;font-weight:600;">Z ↑</button>
+          <button class="jog-btn" style="font-size:10px;font-weight:600;">Z ↓</button>
+        </div>
+        <div style="margin-top:6px;">
+          <button class="btn btn-go" style="font-size:10px;">Ir para coordenadas</button>
+        </div>
+      </div>
+
+      <!-- Layer preview -->
+      <div class="section">
+        <div class="sec-header">
+          <span class="sec-title">Preview de camadas</span>
+        </div>
+        <div class="layer-preview-card">
+          <div class="lp-canvas">
+            <div class="lp-mock">
+              <div class="lp-cmyk-bg"></div>
+              <div class="scan-line"></div>
+              <span class="lp-lbl">CMYK · em progresso</span>
+            </div>
+          </div>
+          <div class="lp-rows">
+            <div class="lp-row">
+              <div class="lp-swatch" style="background:#f0effc;border:1px solid #5e5a7a;"></div>
+              <span class="lp-name">spot_1 — Branco base</span>
+              <span class="lp-status" style="color:var(--success);">✓</span>
+            </div>
+            <div class="lp-row">
+              <div class="lp-swatch" style="background:linear-gradient(135deg,#60c4f4,#f47ab9,#fbbf24,#a8a5c8);"></div>
+              <span class="lp-name">CMYK</span>
+              <span class="lp-status" style="color:var(--teal-bright);">●</span>
+            </div>
+            <div class="lp-row">
+              <div class="lp-swatch" style="background:#3a3548;"></div>
+              <span class="lp-name">spot_1 — Branco 2ª</span>
+              <span class="lp-status" style="color:var(--inactive);">—</span>
+            </div>
+            <div class="lp-row">
+              <div class="lp-swatch" style="background:var(--teal-muted);border:1px solid var(--teal-mid);"></div>
+              <span class="lp-name">spot_2 — Verniz</span>
+              <span class="lp-status" style="color:var(--inactive);">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /col right -->
+
+  </div><!-- /body-grid -->
+</div><!-- /app-shell -->
+
+<script>
+// Live clock
+function updateClock() {
+  const n = new Date();
+  const pad = x => String(x).padStart(2,'0');
+  document.getElementById('clock').textContent = `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Simulated X axis movement
+let xPos = 342;
+setInterval(() => {
+  xPos = (xPos + 2.8) % 1200;
+  const axEl = document.getElementById('ax-x');
+  if (axEl) axEl.innerHTML = `${Math.round(xPos)}<span class="ax-unit">mm</span>`;
+  const inp = document.getElementById('inp-x');
+  if (inp && document.activeElement !== inp) inp.value = xPos.toFixed(1);
+}, 700);
+
+// Alert dismiss
+function dismissAlert(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.transition = 'opacity .2s, transform .2s';
+  el.style.opacity = '0';
+  el.style.transform = 'translateX(6px)';
+  setTimeout(() => el.remove(), 210);
+}
+
+// Toggle pause/resume
+document.querySelector('.btn-pause').addEventListener('click', function() {
+  const isPaused = this.textContent.includes('Retomar');
+  this.textContent = isPaused ? '⏸ Pausar job' : '▶ Retomar job';
+  const dot = document.querySelector('.pulse-dot');
+  const badge = document.querySelector('.status-badge');
+  if (isPaused) {
+    dot.style.animation = 'pulse 2s infinite';
+    dot.style.background = 'var(--teal-bright)';
+    dot.style.boxShadow = '0 0 7px var(--teal-bright)';
+    badge.textContent = '● A imprimir';
+    badge.className = 'status-badge printing';
+  } else {
+    dot.style.animation = 'none';
+    dot.style.background = 'var(--warning)';
+    dot.style.boxShadow = '0 0 7px var(--warning)';
+    badge.textContent = '⏸ Pausado';
+    badge.className = 'status-badge';
+    badge.style.background = 'rgba(251,191,36,.1)';
+    badge.style.color = 'var(--warning)';
+    badge.style.border = '1px solid rgba(251,191,36,.2)';
+  }
+});
+</script>
+</body>
+</html>
