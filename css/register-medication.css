@@ -176,7 +176,7 @@
   flex: 0 0 88%;
   scroll-snap-align: start;
   background: #fff;
-  border-radius: 18px;
+  border-radius: 28px;
   padding: 14px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
@@ -278,7 +278,7 @@
   gap: 12px;
   background: var(--c-white);
   border: 1px solid var(--c-stroke);
-  border-radius: 16px;
+  border-radius: 28px;
   padding: 14px;
   margin-bottom: 12px;
   position: relative;
@@ -415,7 +415,7 @@
 .review-card {
   background: var(--c-white);
   border: 1px solid var(--c-stroke);
-  border-radius: 16px;
+  border-radius: 28px;
   padding: 14px;
   margin-bottom: 12px;
 }

@@ -34,12 +34,14 @@
   --fs-body: 16px;     /* Body / Medium 500 */
   --fs-caption: 14px;  /* Captions / Medium 500 */
 
-  /* Radius / shadow ---------------------------------------- */
+  /* Radius / shadow (extracted from Figma) ------------------ */
   --r-sm: 8px;
   --r-md: 12px;
   --r-lg: 16px;
+  --r-card: 28px;          /* main card radius from Figma */
   --r-pill: 999px;
   --shadow-drop: 0 4px 40px rgba(28, 43, 48, 0.10);
+  --shadow-card: 0 2px 6px 1px rgba(0, 0, 0, 0.08);
   --shadow-icon: 0 4px 30px rgba(28, 43, 48, 0.20);
 
   /* Layout (mobile, 393×852 reference) ---------------------- */
@@ -232,10 +234,10 @@ body {
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 134px;
+  width: 144px;                        /* Figma w-[144] */
   height: 5px;
-  border-radius: 999px;
-  background: var(--c-text);
+  border-radius: 100px;
+  background: #ccc;                    /* Figma: light gray, not dark */
   z-index: 25;
   pointer-events: none;
 }
@@ -248,12 +250,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  height: 52px;
-  padding: 0 24px;
-  border-radius: var(--r-pill);
-  font-family: var(--font-sans);     /* Satoshi */
-  font-size: var(--fs-btn);          /* 16 — BTN-Title */
-  font-weight: 700;                   /* Bold */
+  height: 48px;                       /* Figma: 48 (was 52) */
+  padding: 8px 24px;                  /* Figma p-[8px] inside */
+  border-radius: 24px;                /* Figma: rounded-[24px] */
+  font-family: var(--font-sans);
+  font-size: var(--fs-btn);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0;
   transition: transform 0.06s ease, background 0.15s ease;
@@ -350,29 +352,43 @@ body {
 .tab-bar {
   position: sticky;
   bottom: 0;
-  margin-top: auto;     /* push to bottom of .screen-scroll flex column */
-  height: 84px;
-  padding: 8px 8px 22px;
-  background: var(--c-white);
-  border-top: 1px solid var(--c-stroke);
+  margin-top: auto;
+  height: 91px;                        /* Figma h-[91] */
+  padding: 8px 24px;                   /* Figma px-[24] py-[8] */
+  background: var(--c-bg);             /* Figma: bg-[#f7f8f9] */
+  border-top: 0.6px solid rgba(28, 43, 48, 0.3);
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;                           /* Figma gap-[20] */
   z-index: 15;
 }
 .tab-bar a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  color: var(--c-caption);
-  font-size: 11px;
+  width: 64px;                         /* Figma w-[64] */
+  color: var(--c-text);
+  font-size: 16px;                     /* Figma text-[16] BTN-Title */
   font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 14px;
+  text-align: center;
 }
-.tab-bar a.is-active { color: var(--c-primary); background: rgba(17, 133, 150, 0.08); }
-.tab-bar a svg { width: 22px; height: 22px; stroke: currentColor; }
+.tab-bar a > svg {
+  width: 24px;                         /* visual icon size */
+  height: 24px;
+  padding: 8px;                        /* makes the hit/visual area 40x40 */
+  box-sizing: content-box;
+  border-radius: 8px;
+  stroke: currentColor;
+  fill: none;
+  color: var(--c-text);
+}
+.tab-bar a.is-active > svg {
+  background: var(--c-primary);
+  color: var(--c-white);
+}
 
 /* =========================================================
    Header (back arrow + title)

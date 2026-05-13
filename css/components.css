@@ -245,7 +245,7 @@
 .med-card {
   background: var(--c-white);
   border: 1px solid var(--c-stroke);
-  border-radius: var(--r-lg);
+  border-radius: 28px;
   padding: 14px;
   display: flex;
   align-items: center;
@@ -485,7 +485,7 @@
   gap: 14px;
   padding: 18px 16px;
   background: var(--c-white);
-  border-radius: var(--r-lg);
+  border-radius: 28px;
   border: 1px solid var(--c-stroke);
   box-shadow: 0 4px 16px rgba(28,43,48,0.04);
   margin-bottom: 12px;

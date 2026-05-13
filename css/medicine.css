@@ -61,7 +61,7 @@
 .med-section {
   margin: 0 16px 16px;
   padding: 18px;
-  border-radius: 18px;
+  border-radius: 28px;
 }
 .med-section.regulars  { background: #C7E5E9; }
 .med-section.occasional { background: var(--c-pink); }
@@ -137,7 +137,7 @@
 .panel-card {
   background: var(--c-white);
   border: 1px solid var(--c-stroke);
-  border-radius: 18px;
+  border-radius: 28px;
   padding: 16px;
   margin: 0 16px 14px;
 }
@@ -192,7 +192,7 @@
   padding: 14px 16px;
   background: var(--c-white);
   border: 1px solid var(--c-stroke);
-  border-radius: 16px;
+  border-radius: 28px;
 }
 .more-info .ic {
   width: 40px; height: 40px;
@@ -210,7 +210,7 @@
   margin: 0 16px 14px;
   padding: 16px;
   background: #FCEDD9;
-  border-radius: 18px;
+  border-radius: 28px;
 }
 .alert-block .head {
   display: flex; align-items: center; gap: 10px;
@@ -244,7 +244,7 @@
 .info-card {
   background: var(--c-white);
   border: 1px solid var(--c-stroke);
-  border-radius: 18px;
+  border-radius: 28px;
   padding: 16px;
   margin: 0 16px 14px;
 }
@@ -278,7 +278,7 @@
 .set-card {
   background: var(--c-white);
   border: 1px solid var(--c-stroke);
-  border-radius: 18px;
+  border-radius: 28px;
   padding: 16px;
   margin: 0 16px 14px;
 }
@@ -342,7 +342,7 @@
 
 .notif-card {
   margin: 0 16px 14px;
-  border-radius: 18px;
+  border-radius: 28px;
   padding: 16px;
 }
 .notif-card.intake-block  { background: #D6EAD8; }

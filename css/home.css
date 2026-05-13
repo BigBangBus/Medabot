@@ -1,163 +1,227 @@
 /* =========================================================
-   Home screen specific
+   Home screen specific (paddings/sizing aligned to Figma)
    ========================================================= */
 
 .home-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px 4px;
+  padding: 8px 16px 4px;          /* Figma px-[16] pt-[8] */
 }
 .home-header .greet {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;                       /* Figma gap-[8] */
 }
 .home-header .greet img,
 .home-header .greet .avatar {
-  width: 32px; height: 32px;
+  width: 40px; height: 40px;      /* Figma size-[40] */
 }
 .home-header .greet .hi {
-  font-size: 14px;
-  color: var(--c-caption);
+  font-family: var(--font-sans);
+  font-size: 16px;                /* Figma text-[16] */
+  font-weight: 400;
+  color: #526166;                 /* Figma text-[#526166] */
+  line-height: 22px;
   display: inline;
 }
 .home-header .greet .user {
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-size: 32px;                /* Figma Heading-1 */
+  font-weight: 900;
+  letter-spacing: 0;
   color: var(--c-text);
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  line-height: 1;
 }
 .home-header .greet .user .chev {
-  width: 12px; height: 12px;
+  width: 24px; height: 24px;      /* Figma dropdown icon container */
+  color: var(--c-text);
 }
 
 /* Calendar card -------------------------------------------- */
 .cal-card {
   margin: 16px;
   background: var(--c-white);
-  border: 1px solid var(--c-stroke);
-  border-radius: var(--r-lg);
-  padding: 14px 12px 12px;
+  border: 0.6px solid var(--c-stroke);
+  border-radius: 28px;            /* Figma rounded-[28] */
+  padding: 16px;                  /* Figma p-[16] */
+  box-shadow: var(--shadow-drop);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;                       /* Figma gap-[8] */
 }
 .cal-card .cal-head {
   text-align: center;
+  font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 15px;
-  margin-bottom: 12px;
+  font-size: 16px;                /* Figma text-[16] Bold */
+  line-height: 1;
 }
 .cal-card .week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 0;
+  height: 70px;                   /* Figma h-[70] */
 }
 .cal-card .week .day {
   background: transparent;
-  border-radius: 14px;
-  padding: 6px 0 8px;
+  border-radius: 10px;            /* Figma rounded-[10] */
+  padding: 2px;                   /* Figma p-[2] inner padding */
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  border: 1px solid transparent;
+  justify-content: center;
+  gap: 8px;                       /* Figma gap-[8] */
+  height: 70px;
+  width: 48px;                    /* Figma w-[48] */
 }
-.cal-card .week .day .letter { font-size: 12px; font-weight: 700; color: var(--c-caption); }
-.cal-card .week .day .num    { font-size: 16px; font-weight: 700; color: var(--c-text); }
-.cal-card .week .day .dot    { width: 6px; height: 6px; border-radius: 50%; background: var(--c-stroke); }
+.cal-card .week .day .letter {
+  font-size: 12px;
+  font-weight: 500;
+  color: #AAA;                    /* Figma text-[#aaa] */
+  line-height: 16px;
+}
+.cal-card .week .day .num {
+  font-size: 12px;
+  font-weight: 700;
+  color: #BBB;
+  line-height: 16px;
+}
+.cal-card .week .day .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #CCC;
+}
 .cal-card .week .day .dot.done { background: #2BB47A; }
 .cal-card .week .day .dot.missed { background: #E0573A; }
 
 .cal-card .week .day.is-today {
   background: var(--c-secondary);
-  color: var(--c-white);
+  border-radius: 14px;            /* Figma rounded-[14] */
 }
 .cal-card .week .day.is-today .letter,
-.cal-card .week .day.is-today .num { color: var(--c-white); }
-.cal-card .week .day.is-today .dot { background: var(--c-white); }
+.cal-card .week .day.is-today .num { color: var(--c-bg); }
+.cal-card .week .day.is-today .dot { background: var(--c-bg); }
 
 .cal-card .progress-line {
-  margin-top: 12px;
-  height: 4px;
-  border-radius: 999px;
-  background: #F1D7C0;
+  height: 8px;                    /* Figma h-[8] */
+  border-radius: 100px;
+  background: #F3F4F5;
   position: relative;
+  margin-top: 0;
 }
 .cal-card .progress-line::after {
   content: "";
   position: absolute;
   inset: 0;
-  width: 55%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--c-secondary), #F2C8A4);
+  width: 14.33%;                  /* Figma w-[14.33%] grabber */
+  margin-left: 42.99%;
+  border-radius: 100px;
+  background: var(--c-white);
+  height: 6px;
+  top: 1px;
 }
 
 /* Today's medication section ------------------------------- */
 .today-title {
-  padding: 10px 16px 8px;
+  padding: 0 16px 0;
   font-family: var(--font-sans);
-  font-size: var(--fs-h2);    /* 24 — Heading-2 */
-  font-weight: 700;            /* Bold */
+  font-size: 24px;                /* Figma Heading-2 */
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0;
+  margin-bottom: 16px;
+  margin-top: 24px;               /* Figma gap-[24] from calendar */
 }
 
 .register-cta {
-  margin: 8px 16px 14px;
+  margin: 0 16px 16px;
 }
 
 /* Dose progress card (per medicine) ------------------------ */
 .dose-progress {
   background: var(--c-white);
-  border: 1px solid var(--c-stroke);
-  border-radius: var(--r-lg);
-  padding: 14px;
-  margin: 0 16px 12px;
+  border: 0.6px solid var(--c-stroke);
+  border-radius: 28px;             /* Figma rounded-[28] */
+  padding: 16px;
+  margin: 0 16px 8px;              /* Figma gap-[8] between cards */
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .dose-progress .top {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  width: 100%;
+}
+.dose-progress .top > .left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .dose-progress .top .pill-ico {
-  width: 36px; height: 36px;
-  border-radius: 50%;
+  width: 42px; height: 42px;       /* Figma size-[42] */
+  border-radius: 39px;             /* Figma rounded-[39] */
   background: var(--c-pink);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  box-shadow: var(--shadow-drop);
+  overflow: hidden;
 }
-.dose-progress .top .pill-ico svg { width: 22px; height: 22px; }
-.dose-progress .top .name { font-weight: 700; font-size: 17px; line-height: 1.15; }
-.dose-progress .top .form { color: var(--c-caption); font-size: 13px; }
+.dose-progress .top .pill-ico img,
+.dose-progress .top .pill-ico .pill-photo {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.dose-progress .top .pill-ico svg { width: 26px; height: 26px; }
+.dose-progress .top .name {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 20px;                 /* Figma text-[20] Heading-3 */
+  line-height: 1;
+  color: var(--c-text);
+}
+.dose-progress .top .form {
+  color: var(--c-caption);
+  font-size: 14px;                 /* Figma Captions */
+  font-weight: 500;
+  line-height: 1;
+  margin-top: 2px;
+}
 .dose-progress .ring {
   width: 40px; height: 40px;
-  margin-left: auto;
-  position: relative;
   flex-shrink: 0;
+  position: relative;
 }
 .dose-progress .meta-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--c-caption);
+  line-height: 1;
 }
 .dose-progress .bar {
-  margin-top: 6px;
   height: 4px;
-  border-radius: 999px;
-  background: var(--c-pink);
+  border-radius: 40px;
+  background: var(--c-stroke);
   overflow: hidden;
+  margin-top: 0;
 }
 .dose-progress .bar > span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, #B197D6, var(--c-primary));
+  background: linear-gradient(90deg, #B994F7, #E8DFF7);
   width: 50%;
-  border-radius: 999px;
+  border-radius: 40px;
 }
 
 .dose-progress.complete .bar > span { width: 100%; }
@@ -166,18 +230,25 @@
 /* Overall "Doses of the day" footer bar -------------------- */
 .day-progress {
   background: var(--c-white);
-  border: 1px solid var(--c-stroke);
-  border-radius: var(--r-lg);
-  padding: 14px;
-  margin: 0 16px 16px;
+  border: 0.6px solid var(--c-stroke);
+  border-radius: 28px;             /* Figma rounded-[28] */
+  padding: 16px;
+  margin: 8px 16px 16px;
+  box-shadow: var(--shadow-card);
 }
-.day-progress .row { display: flex; justify-content: space-between; font-size: 14px; }
-.day-progress .row .label { color: var(--c-text); font-weight: 600; }
+.day-progress .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}
+.day-progress .row .label { color: var(--c-text); font-weight: 700; }
 .day-progress .row .count { color: var(--c-caption); }
 .day-progress .bar {
   margin-top: 8px;
-  height: 5px;
-  border-radius: 999px;
+  height: 4px;
+  border-radius: 40px;
   background: var(--c-stroke);
   overflow: hidden;
 }
@@ -186,5 +257,5 @@
   height: 100%;
   background: linear-gradient(90deg, #6BD0DC, var(--c-primary));
   width: 33%;
-  border-radius: 999px;
+  border-radius: 40px;
 }
