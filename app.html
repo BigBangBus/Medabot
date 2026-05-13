@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#118596" />
+  <title>Medabot — Prototype</title>
+
+  <!-- High-fi design system -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/onboarding.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/medicine.css" />
+  <link rel="stylesheet" href="css/register-medication.css" />
+  <link rel="stylesheet" href="css/chat-search.css" />
+
+  <style>
+    /* Single-page app screen mechanics (adapted from lowfi) */
+    .phone { isolation: isolate; }
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .screen.active { display: flex; }
+    .screen.slide-in-r { animation: sir .28s ease forwards; }
+    .screen.slide-in-l { animation: sil .28s ease forwards; }
+    @keyframes sir { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    @keyframes sil { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+    /* Each screen wraps its content inside .screen-scroll for the scroll behaviour */
+    .screen > .screen-scroll {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding-top: var(--safe-top);
+    }
+    .screen > .screen-scroll::-webkit-scrollbar { display: none; }
+    .screen[data-hero-bleed="true"] > .screen-scroll { padding-top: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .screen.slide-in-r, .screen.slide-in-l { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-stage">
+    <div class="phone" id="phone">
+
+      <!-- Status bar (single instance overlaying every screen) -->
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="levels">
+          <svg viewBox="0 0 19 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="5" width="3" height="7" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 4.5 a12 12 0 0 1 16 0"/><path d="M3 7 a8 8 0 0 1 11 0"/><path d="M5.5 9.5 a4 4 0 0 1 6 0"/><circle cx="8.5" cy="11" r="1" fill="currentColor"/></svg>
+          <svg viewBox="0 0 27 13" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="12" rx="3"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="currentColor"/><rect x="23.5" y="4" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: Welcome (Onboarding 1) ================= -->
+      <div id="welcome" class="screen active" data-hero-bleed="true">
+        <div class="screen-scroll">
+          <main class="onb">
+            <section class="hero">
+              <div class="pill-orbit">
+                <div class="pill p-top"><img src="assets/Pill-aspirine-1.png" alt=""></div>
+                <div class="pill p-tl"><img src="assets/Pill-aspirine-3.png" alt=""></div>
+                <div class="pill p-tr"><img src="assets/pill-spray.png" alt=""></div>
+                <div class="pill p-bl"><img src="assets/Pill-allergy.png" alt=""></div>
+                <div class="pill p-br"><img src="assets/pill-drops.png" alt=""></div>
+                <div class="pill p-bot"><img src="assets/pill-vial.png" alt=""></div>
+              </div>
+              <div class="bot"><img src="assets/Bot.png" alt="MedaBot" /></div>
+            </section>
+            <section class="content">
+              <h1>Welcome to MedaBot</h1>
+              <p>Your personal healthcare companion.</p>
+              <div class="dots"><span class="active"></span><span></span><span></span></div>
+            </section>
+            <button type="button" class="btn btn-primary cta-fixed" onclick="go('onb-3','r')">Get Started</button>
+          </main>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: Onboarding 3 (Take control) ================= -->
+      <div id="onb-3" class="screen" data-hero-bleed="true">
+        <div class="screen-scroll">
+          <main class="onb">
+            <section class="hero solo">
+              <div class="bot"><img src="assets/Bot-2.png" alt="MedaBot" /></div>
+            </section>
+            <section class="content">
+              <h1>Take control of your<br>health.</h1>
+              <p>Never miss a dose. MedaBot helps you manage<br>your medications simply and effectively.</p>
+              <div class="dots"><span></span><span></span><span class="active"></span></div>
+            </section>
+            <div class="ctas">
+              <button type="button" class="btn btn-primary" onclick="go('sign-up','r')">Sign-Up</button>
+              <button type="button" class="btn btn-secondary" onclick="go('sign-in','r')">Sign-In</button>
+              <button type="button" class="btn" style="background:var(--c-white);color:var(--c-primary);" onclick="go('chat','r',false,{guest:true})">Chat Without Account</button>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: Sign-Up ================= -->
+      <div id="sign-up" class="screen">
+        <div class="screen-scroll">
+          <div class="top-bar">
+            <button type="button" class="back-btn" onclick="goBack()" aria-label="back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 L9 12 L15 6"/></svg>
+            </button>
+          </div>
+          <main class="auth">
+            <div class="bot-inset"><img src="assets/Bot.png" alt="" /></div>
+            <h1>Sign-Up</h1>
+            <p class="lead">Sign-Up to save your medication.</p>
+            <form class="form" onsubmit="event.preventDefault(); go('dashboard','r')">
+              <div class="form-field">
+                <label class="label">Email</label>
+                <input class="input" type="email" placeholder="example@email.com" />
+              </div>
+              <div class="form-field">
+                <label class="label">Password</label>
+                <input class="input" type="password" placeholder="Minimum 8 characters" />
+              </div>
+              <div class="form-field">
+                <label class="label">Confirm password</label>
+                <input class="input" type="password" placeholder="Repeat password" />
+              </div>
+              <button class="btn btn-primary" type="submit" style="margin-top:8px">Create Account</button>
+            </form>
+            <div class="divider">or</div>
+            <button type="button" class="btn btn-secondary" onclick="go('dashboard','r')">
+              <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 18.9 13 24 13c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.5 2.4-7.2 2.4-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.5 39.5 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.5l6.2 5.2C41 35.2 44 30 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+              Sign-In with Google
+            </button>
+            <p class="helper-link">Already have and account? <a href="#" onclick="event.preventDefault(); go('sign-in','r')">Sign-In</a></p>
+          </main>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: Sign-In ================= -->
+      <div id="sign-in" class="screen">
+        <div class="screen-scroll">
+          <div class="top-bar">
+            <button type="button" class="back-btn" onclick="goBack()" aria-label="back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 L9 12 L15 6"/></svg>
+            </button>
+          </div>
+          <main class="auth">
+            <div class="bot-inset"><img src="assets/Bot-2.png" alt="" /></div>
+            <h1>Good to see you again</h1>
+            <p class="lead">Sign-In to continue.</p>
+            <form class="form" onsubmit="event.preventDefault(); go('dashboard','r')">
+              <div class="form-field">
+                <label class="label">Email</label>
+                <input class="input" type="email" placeholder="example@email.com" />
+              </div>
+              <div class="form-field">
+                <label class="label">Password</label>
+                <input class="input" type="password" placeholder="Your password" />
+                <div class="row-end" style="margin-top:8px"><a href="#" onclick="event.preventDefault()">Forgot password?</a></div>
+              </div>
+              <button class="btn btn-primary" type="submit" style="margin-top:36px">Sign-In</button>
+            </form>
+            <div class="divider">or</div>
+            <button type="button" class="btn btn-secondary" onclick="go('dashboard','r')">
+              <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 18.9 13 24 13c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.5 2.4-7.2 2.4-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.5 39.5 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.5l6.2 5.2C41 35.2 44 30 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+              Sign-In with Google
+            </button>
+            <p class="helper-link">Don't have an account? <a href="#" onclick="event.preventDefault(); go('sign-up','r')">Sign-Up</a></p>
+          </main>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: Dashboard (Home) ================= -->
+      <div id="dashboard" class="screen">
+        <div class="screen-scroll">
+          <header class="home-header">
+            <div class="greet">
+              <div class="avatar"><img src="assets/User.png" alt=""></div>
+              <div>
+                <span class="hi">Hi,&nbsp;</span><span class="user" id="dash-greet-name">User
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"/></svg>
+                </span>
+              </div>
+            </div>
+            <button type="button" class="bell" aria-label="notifications" onclick="go('alertas','r')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 16 v-5 a6 6 0 0 0-12 0 v5 l-2 2 v1 h16 v-1 l-2-2 Z"/><path d="M10 21 a2 2 0 0 0 4 0"/></svg>
+            </button>
+          </header>
+
+          <section class="cal-card">
+            <div class="cal-head">Today, 29th January</div>
+            <div class="week">
+              <div class="day"><span class="letter">W</span><span class="num">26</span><span class="dot done"></span></div>
+              <div class="day"><span class="letter">T</span><span class="num">27</span><span class="dot done"></span></div>
+              <div class="day"><span class="letter">W</span><span class="num">28</span><span class="dot missed"></span></div>
+              <div class="day is-today"><span class="letter">T</span><span class="num">29</span><span class="dot"></span></div>
+              <div class="day"><span class="letter">F</span><span class="num">30</span><span class="dot"></span></div>
+              <div class="day"><span class="letter">S</span><span class="num">31</span><span class="dot"></span></div>
+              <div class="day"><span class="letter">S</span><span class="num">1</span><span class="dot"></span></div>
+            </div>
+            <div class="progress-line"></div>
+          </section>
+
+          <h2 class="today-title">Today's medication</h2>
+
+          <button type="button" class="btn btn-primary register-cta" onclick="go('register-photograph','r')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5 V19 M5 12 H19"/></svg>
+            Register Medicine
+          </button>
+
+          <!-- Dose cards are rendered dynamically -->
+          <div id="dash-meds"></div>
+
+          <!-- Tab bar -->
+          <nav class="tab-bar">
+            <a href="#" onclick="event.preventDefault(); go('dashboard','l')" class="is-active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10 H21 M8 3 V7 M16 3 V7"/></svg>
+              Calendar
+            </a>
+            <a href="#" onclick="event.preventDefault(); go('arquivo','r')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M5 12 H19"/></svg>
+              Medicine
+            </a>
+            <a href="#" onclick="event.preventDefault(); go('search','r')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16 16"/></svg>
+              Search
+            </a>
+            <a href="#" onclick="event.preventDefault(); go('chat','r')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6 a2 2 0 0 1 2-2 h12 a2 2 0 0 1 2 2 v9 a2 2 0 0 1-2 2 h-7 l-5 4 v-4 H6 a2 2 0 0 1-2-2 Z"/></svg>
+              Chat
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: Dose Detail (Medicine) ================= -->
+      <div id="med-detail" class="screen">
+        <div class="screen-scroll">
+          <div class="detail-screen">
+            <div class="hd">
+              <button type="button" class="back-btn" onclick="goBack()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 L9 12 L15 6"/></svg>
+              </button>
+              <div><h1 id="md-name">Jardiance</h1><div class="meta" id="md-meta">25mg | Pill</div></div>
+            </div>
+
+            <div class="panel-card">
+              <h3>Today</h3>
+              <div class="dose-row-line"><span class="time">08:00</span><button class="btn-mini taken">Taken</button></div>
+              <div class="dose-row-line"><span class="time">16:00</span><button class="btn-mini take">Take</button></div>
+            </div>
+
+            <div class="panel-card mini-cal">
+              <h4 style="text-align:center;font-size:15px;font-weight:700;margin-bottom:10px">Today, 29th January</h4>
+              <div class="week" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px">
+                <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">W</span><span class="num" style="font-size:15px">26</span><span class="dot done" style="width:6px;height:6px;border-radius:50%;background:#2BB47A;display:inline-block;margin-top:4px"></span></div>
+                <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">T</span><span class="num" style="font-size:15px">27</span><span class="dot done" style="width:6px;height:6px;border-radius:50%;background:#2BB47A;display:inline-block;margin-top:4px"></span></div>
+                <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">W</span><span class="num" style="font-size:15px">28</span><span class="dot missed" style="width:6px;height:6px;border-radius:50%;background:#E0573A;display:inline-block;margin-top:4px"></span></div>
+                <div class="day is-today" style="background:var(--c-secondary);border-radius:14px;padding:6px 0"><span class="letter" style="font-size:11px;color:#fff">T</span><span class="num" style="font-size:15px;color:#fff">29</span><span class="dot" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;margin-top:4px"></span></div>
+                <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">F</span><span class="num" style="font-size:15px">30</span><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--c-stroke);display:inline-block;margin-top:4px"></span></div>
+                <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">S</span><span class="num" style="font-size:15px">31</span><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--c-stroke);display:inline-block;margin-top:4px"></span></div>
+                <div class="day"><span class="letter" style="font-size:11px;color:var(--c-caption)">S</span><span class="num" style="font-size:15px">1</span><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--c-stroke);display:inline-block;margin-top:4px"></span></div>
+              </div>
+            </div>
+
+            <div class="panel-card">
+              <h3>Details</h3>
+              <div class="kv-row"><span class="k">Active ingredient</span><span class="v">Empagliflozin</span></div>
+              <div class="kv-row"><span class="k">Dosage</span><span class="v">25mg</span></div>
+              <div class="kv-row"><span class="k">Dosage frequency</span><span class="v">Daily - 2x</span></div>
+              <div class="kv-row"><span class="k">Start of treatment</span><span class="v">29th January 2026</span></div>
+              <div class="kv-row"><span class="k">End of treatment</span><span class="v">N/A</span></div>
+            </div>
+
+            <button type="button" class="more-info" onclick="go('med-info','r')" style="border:none;text-align:left;cursor:pointer;width:calc(100% - 32px);background:var(--c-white)">
+              <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5 c0-1 1-2 2-2 h6 v18 h-6 c-1 0-2-1-2-2 z M12 3 h6 c1 0 2 1 2 2 v14 c0 1-1 2-2 2 h-6 z"/></svg></div>
+              <div class="body">
+                <div class="title">More info</div>
+                <div class="sub">Leaflet, interactions, etc.</div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--c-primary)"><path d="M9 6 L15 12 L9 18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Placeholder screens (to be ported in next phase) -->
+      <div id="arquivo" class="screen"><div class="screen-scroll" style="display:flex;align-items:center;justify-content:center;color:var(--c-caption);padding:24px;text-align:center">Medicine List — coming in next phase. <button onclick="go('dashboard','l')" class="btn btn-primary" style="margin-top:16px">Back to Home</button></div></div>
+      <div id="alertas" class="screen"><div class="screen-scroll" style="display:flex;align-items:center;justify-content:center;color:var(--c-caption);padding:24px;text-align:center">Notifications — coming in next phase. <button onclick="go('dashboard','l')" class="btn btn-primary" style="margin-top:16px">Back to Home</button></div></div>
+      <div id="search" class="screen"><div class="screen-scroll" style="display:flex;align-items:center;justify-content:center;color:var(--c-caption);padding:24px;text-align:center">Search — coming in next phase. <button onclick="go('dashboard','l')" class="btn btn-primary" style="margin-top:16px">Back to Home</button></div></div>
+      <div id="chat" class="screen"><div class="screen-scroll" style="display:flex;align-items:center;justify-content:center;color:var(--c-caption);padding:24px;text-align:center">Chat — coming in next phase. <button onclick="go('dashboard','l')" class="btn btn-primary" style="margin-top:16px">Back to Home</button></div></div>
+      <div id="register-photograph" class="screen"><div class="screen-scroll" style="display:flex;align-items:center;justify-content:center;color:var(--c-caption);padding:24px;text-align:center">Register Medicine — coming in next phase. <button onclick="go('dashboard','l')" class="btn btn-primary" style="margin-top:16px">Back to Home</button></div></div>
+      <div id="med-info" class="screen"><div class="screen-scroll" style="display:flex;align-items:center;justify-content:center;color:var(--c-caption);padding:24px;text-align:center">Medicine Info — coming in next phase. <button onclick="go('med-detail','l')" class="btn btn-primary" style="margin-top:16px">Back to dose</button></div></div>
+
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
