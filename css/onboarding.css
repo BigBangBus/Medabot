@@ -230,7 +230,7 @@
 
 /* Single CTA fixed at bottom ------------------------------ */
 .onb .cta-fixed {
-  position: absolute;
+  position: sticky;
   bottom: 28px;
   left: 24px;
   right: 24px;

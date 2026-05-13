@@ -170,19 +170,42 @@ body {
 .phone {
   position: relative;
   width: var(--screen-w);
-  min-height: var(--screen-h);
+  height: var(--screen-h);              /* exact 852, never grows */
   background: var(--c-bg);
   border-radius: 44px;
-  overflow: hidden;
+  overflow: hidden;                      /* outer never scrolls */
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
   isolation: isolate;
 }
 
-/* Status bar -------------------------------------------------- */
+/* Scrollable inner area — fills the phone, scrolls internally ----------- */
+.screen-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-top: var(--safe-top);   /* reserve space below the status bar */
+}
+.screen-scroll::-webkit-scrollbar { display: none; }
+
+/* Hero/camera screens want the gradient to extend behind the status bar */
+.screen-scroll:has(.hero),
+.screen-scroll:has(.camera),
+.screen-scroll:has(.chat-screen) {
+  padding-top: 0;
+}
+
+/* Status bar — transparent overlay on top of the phone viewport ---------- */
 .status-bar {
-  position: relative;
-  z-index: 5;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
   height: var(--safe-top);
   padding: 21px 24px 0;
   display: flex;
@@ -192,6 +215,7 @@ body {
   font-weight: 600;
   font-size: 17px;
   color: var(--c-text);
+  background: transparent;               /* overlay style, like real iPhone */
   pointer-events: none;
 }
 .status-bar .levels {
@@ -202,7 +226,7 @@ body {
 }
 .status-bar .levels svg { width: 18px; height: 12px; }
 
-/* Home indicator at the bottom */
+/* Home indicator — fixed overlay at the very bottom of the phone viewport */
 .home-indicator {
   position: absolute;
   bottom: 8px;
@@ -212,7 +236,8 @@ body {
   height: 5px;
   border-radius: 999px;
   background: var(--c-text);
-  z-index: 6;
+  z-index: 25;
+  pointer-events: none;
 }
 
 /* =========================================================
@@ -323,10 +348,9 @@ body {
    Bottom tab bar (Calendar / Medicine / Search / Chat)
    ========================================================= */
 .tab-bar {
-  position: absolute;
+  position: sticky;
   bottom: 0;
-  left: 0;
-  right: 0;
+  margin-top: auto;     /* push to bottom of .screen-scroll flex column */
   height: 84px;
   padding: 8px 8px 22px;
   background: var(--c-white);
@@ -334,7 +358,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  z-index: 4;
+  z-index: 15;
 }
 .tab-bar a {
   display: flex;

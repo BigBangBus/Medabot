@@ -145,7 +145,7 @@
 
 /* ----- Floating action button (Home "+ New") ----- */
 .fab {
-  position: absolute;
+  position: sticky;
   bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
@@ -224,7 +224,7 @@
 
 /* ----- Chat input bar ----- */
 .chat-input {
-  position: absolute;
+  position: sticky;
   left: 0; right: 0;
   bottom: 0;
   padding: 12px 16px 28px;
@@ -513,7 +513,7 @@
 
 /* Small "do it later" muted CTA */
 .do-later {
-  position: absolute;
+  position: sticky;
   bottom: 50px;
   left: 0; right: 0;
   text-align: center;

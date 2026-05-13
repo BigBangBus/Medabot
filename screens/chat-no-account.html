@@ -7,6 +7,22 @@
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/chat-search.css" />
+  <style>
+    .msg { opacity: 0; transform: translateY(6px); transition: opacity .25s ease, transform .25s ease; }
+    .msg.is-visible { opacity: 1; transform: translateY(0); }
+    .typing { display: inline-flex; gap: 4px; padding: 6px 0; }
+    .typing span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--c-caption);
+      animation: typing 1.2s infinite ease-in-out;
+    }
+    .typing span:nth-child(2) { animation-delay: .15s; }
+    .typing span:nth-child(3) { animation-delay: .3s; }
+    @keyframes typing {
+      0%,100% { opacity: .25; transform: translateY(0); }
+      50%     { opacity: 1;   transform: translateY(-3px); }
+    }
+  </style>
 </head>
 <body>
   <div class="phone-stage">
@@ -21,6 +37,8 @@
         </div>
       </div>
 
+      <div class="screen-scroll">
+
       <div class="chat-screen" style="top:62px">
         <div class="chat-header">
           <a href="onboarding-3.html" class="back-btn" aria-label="back">
@@ -31,35 +49,93 @@
 
         <p class="chat-banner">Get a personalized experience by <a href="sign-up.html">creating an account.</a></p>
 
-        <div class="chat-thread">
-          <div class="msg">
-            <div class="av"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="3" width="12" height="18" rx="4"/></svg></div>
-            <div class="bub">Hello, how can I help you?</div>
-          </div>
-          <div class="msg from-me">
-            <div class="bub">I started taking Brufen 3 days ago. Can I take it on an empty stomach?</div>
-          </div>
-          <div class="msg">
-            <div class="av"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="3" width="12" height="18" rx="4"/></svg></div>
-            <div class="bub">It's best to take Brufen (ibuprofen) with food or milk to protect your stomach lining. Taking it on an empty stomach can increase the risk of irritation or discomfort. If you experience stomach pain, nausea, or heartburn, take it with a meal or a full glass of milk.<br>Source: <a href="#">Infarmed — Official Leaflet</a></div>
-          </div>
-        </div>
+        <div class="chat-thread" id="thread"><!-- bubbles appended via JS --></div>
 
         <div class="chat-bar">
-          <div class="input-shell" onclick="window.location='chat-no-account-keyboard.html'">
-            <input placeholder="Chat with MedaBot" />
+          <div class="input-shell">
+            <input id="chat-input" placeholder="Chat with MedaBot" autocomplete="off" />
             <div class="actions">
               <div class="left">
                 <span class="ico-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3 L7 5 H4 c-1.1 0-2 .9-2 2 v12 c0 1.1 .9 2 2 2 h16 c1.1 0 2-.9 2-2 V7 c0-1.1-.9-2-2-2 h-3 l-2-2 Z"/><circle cx="12" cy="13" r="4"/></svg></span>
               </div>
-              <div class="send">A↑</div>
+              <button id="send-btn" class="send" aria-label="send">A↑</button>
             </div>
           </div>
         </div>
+      </div>
       </div>
 
       <div class="home-indicator"></div>
     </div>
   </div>
+
+  <script>
+    const thread = document.getElementById('thread');
+    const input  = document.getElementById('chat-input');
+    const send   = document.getElementById('send-btn');
+
+    const BOT_AV = '<div class="av"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="3" width="12" height="18" rx="4"/></svg></div>';
+    const SUGGESTED = "I started taking Brufen 3 days ago. Can I take it on an empty stomach?";
+    const BOT_REPLY = `It's best to take Brufen (ibuprofen) with food or milk to protect your stomach lining. Taking it on an empty stomach can increase the risk of irritation or discomfort. If you experience stomach pain, nausea, or heartburn, take it with a meal or a full glass of milk.<br>Source: <a href="#">Infarmed — Official Leaflet</a>`;
+
+    let conversationStarted = false;
+
+    function appendMsg(from, html) {
+      const msg = document.createElement('div');
+      msg.className = 'msg' + (from === 'me' ? ' from-me' : '');
+      msg.innerHTML = (from === 'bot' ? BOT_AV : '') + `<div class="bub">${html}</div>`;
+      thread.appendChild(msg);
+      requestAnimationFrame(() => msg.classList.add('is-visible'));
+      thread.scrollTop = thread.scrollHeight;
+      return msg;
+    }
+
+    function showTyping() {
+      const msg = document.createElement('div');
+      msg.className = 'msg is-visible';
+      msg.id = '__typing';
+      msg.innerHTML = BOT_AV + '<div class="bub"><span class="typing"><span></span><span></span><span></span></span></div>';
+      thread.appendChild(msg);
+      thread.scrollTop = thread.scrollHeight;
+    }
+    function hideTyping() {
+      const t = document.getElementById('__typing');
+      if (t) t.remove();
+    }
+
+    /* 1. On load: bot greets after 0.5s */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        appendMsg('bot', 'Hello, how can I help you?');
+        input.placeholder = SUGGESTED;
+      }, 500);
+    });
+
+    /* 2. On send: user bubble → typing → bot reply */
+    function handleSend() {
+      const text = input.value.trim() || SUGGESTED;
+      input.value = '';
+      appendMsg('me', text);
+
+      if (!conversationStarted) {
+        conversationStarted = true;
+        setTimeout(() => {
+          showTyping();
+          setTimeout(() => { hideTyping(); appendMsg('bot', BOT_REPLY); }, 1400);
+        }, 600);
+      } else {
+        setTimeout(() => {
+          showTyping();
+          setTimeout(() => {
+            hideTyping();
+            appendMsg('bot', "Got it. For more personalised advice, consider <a href='sign-up.html'>creating an account</a>.");
+          }, 1200);
+        }, 500);
+      }
+    }
+
+    send.addEventListener('click', handleSend);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); } });
+  </script>
 </body>
 </html>
